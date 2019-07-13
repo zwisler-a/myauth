@@ -13,6 +13,9 @@ export class Realm {
     @Column()
     domains: string;
 
+    @Column({length:1000})
+    secret: string;
+
     @OneToMany(() => PropertyDefinition, property => property.realm, { eager: true })
     properties: PropertyDefinition[];
 

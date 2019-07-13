@@ -1,6 +1,6 @@
-import { Route, Endpoint } from '@zwisler/bridge';
+import { Endpoint, Route } from '@zwisler/bridge';
+
 import { RealmService } from '../service/realm.service';
-import { create } from 'domain';
 
 @Route({ basePath: '/realm' })
 export class RealmRoute {
@@ -12,9 +12,12 @@ export class RealmRoute {
     }
 
     @Endpoint({ method: 'POST' })
-    create(name: string, domains: string) {
+    create(name: string, domains: string, secret: string) {
         return this.realmService.save(name, domains);
     }
 
-    
+    @Endpoint({ method: 'POST' })
+    update(realmId: string, name: string, domains: string, secret: string) {
+        return this.realmService.update(realmId, name, domains, secret);
+    }
 }

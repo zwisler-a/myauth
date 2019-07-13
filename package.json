@@ -4,7 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "nodemon"
+        "start": "nodemon",
+        "build": "rimraf dist && tsc && ncp src/ui dist/ui && ncp package.json dist/package.json"
     },
     "dependencies": {
         "@zwisler/bridge": "^1.1.7",

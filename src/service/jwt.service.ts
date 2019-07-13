@@ -10,7 +10,11 @@ export class JwtService {
     constructor(config: Config) {
         this.secret = fs.readFileSync(config.jwtSecret);
     }
-    createToken(payload: {}) {
-        return jwt.sign(payload, this.secret);
+    createToken(payload: {}, secret?: string) {
+        return jwt.sign(payload, secret || this.secret);
+    }
+
+    verify(token: string, secret?: string) {
+        return jwt.verify(token, secret || this.secret);
     }
 }

@@ -15,6 +15,14 @@ export class RealmService {
         return this.realmRepo.find();
     }
 
+    async update(realmId: string, name: string, domains: string, secret: string) {
+        const realm = await this.realmRepo.findOne(realmId);
+        realm.name = name;
+        realm.domains = domains;
+        realm.secret = secret;
+        return this.realmRepo.save(realm);
+    }
+
     save(name: string, domains: string) {
         const realm = new Realm(name, domains);
         return this.realmRepo.save(realm);

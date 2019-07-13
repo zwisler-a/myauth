@@ -7,7 +7,7 @@ export class AuthService {
     constructor() {
         this._urls = {
             getToken: '/auth/getToken?loginToken=',
-            login: '/index.html?redirect=' + encodeURIComponent('http://localhost:3333/admin.html') + '&realmId=' + '6826dd1b-33c0-457c-b0ae-cb844702f742'
+            login: '/auth/login?redirect=' + encodeURIComponent('http://localhost:3333/admin.html') + '&realmId=' + '6826dd1b-33c0-457c-b0ae-cb844702f742'
         };
     }
 
@@ -17,6 +17,7 @@ export class AuthService {
             .then(res => {
                 if (res.error) return (window.location = this._urls.login);
                 this._token = res.data;
+                console.log(this._token);
                 return this._token;
             });
     }

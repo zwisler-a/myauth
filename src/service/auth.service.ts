@@ -4,26 +4,36 @@ import { UserService } from './user.service';
 import { JwtService } from './jwt.service';
 import { RealmService } from './realm.service';
 import { PropertyService } from './property.service';
+import { User } from '../model/user.model';
 const bcrypt = require('bcryptjs');
 const uuid = require('uuid/v1');
 
 @Service()
 export class AuthService {
-    loginTokens: {} = {};
+    realmTokens: {} = {};
     constructor(private userService: UserService, private jwtService: JwtService, private realmService: RealmService, private propService: PropertyService) {}
 
-    async login(username: string, password: string, realmId?: string) {
+    async getSignInToken(username: string, password: string, realmId: string) {
         const user = await this.userService.getUserByName(username);
         if (!user || !(await bcrypt.compare(password, user.password))) {
             throw new Error('Cant authenticate User!');
         }
+        const realmToken = this.createRealmToken(user, realmId);
+        return [this.createSignInToken(realmToken), this.createUserToken(user)];
+    }
+
+    createUserToken(user: User) {
+        return this.jwtService.createToken({ userId: user.id });
+    }
+
+    async createRealmToken(user: User, realmId: string) {
         delete user.password;
         const jwtPayload = {
             id: user.id,
             name: user.name
         };
+        const realm = await this.realmService.get(realmId);
         if (realmId && realmId != '') {
-            const realm = await this.realmService.get(realmId);
             if (realm.properties) {
                 const propPromises = realm.properties.map(async propDef => {
                     const props = await this.propService.get(user.id, propDef.id);
@@ -32,21 +42,23 @@ export class AuthService {
                 jwtPayload['properties'] = await Promise.all(propPromises);
             }
         }
-        return this.createLoginToken(this.jwtService.createToken(jwtPayload));
+        return this.jwtService.createToken(jwtPayload, realm.secret);
     }
 
-    createLoginToken(token) {
-        const loginToken = uuid();
-        this.loginTokens[loginToken] = token;
+    createSignInToken(realmToken) {
+        const id = uuid();
+        const signInToken = this.jwtService.createToken({ id });
+        this.realmTokens[id] = realmToken;
         setTimeout(() => {
-            delete this.loginTokens[loginToken];
+            delete this.realmTokens[id];
         }, 60 * 1000);
-        return loginToken;
+        return signInToken;
     }
 
-    getLoginToken(loginToken) {
-        const token = this.loginTokens[loginToken];
-        delete this.loginTokens[loginToken];
+    getRealmToken(signInToken) {
+        const payload = this.jwtService.verify(signInToken);
+        const token = this.realmTokens[payload.id];
+        delete this.realmTokens[payload.id];
         if (!token) throw new Error('Invalid token!');
         return token;
     }
