@@ -13,14 +13,15 @@ export class Realm {
     @Column()
     domains: string;
 
-    @Column({length:1000})
+    @Column({ length: 1000 })
     secret: string;
 
     @OneToMany(() => PropertyDefinition, property => property.realm, { eager: true })
     properties: PropertyDefinition[];
 
-    constructor(name: string, domains: string) {
+    constructor(name: string, domains: string, secret: string) {
         this.name = name;
         this.domains = domains;
+        this.secret = secret;
     }
 }

@@ -8,7 +8,7 @@
         "build": "rimraf dist && tsc && ncp src/ui dist/ui && ncp package.json dist/package.json"
     },
     "dependencies": {
-        "@zwisler/bridge": "^1.1.7",
+        "@zwisler/bridge": "^1.1.8",
         "bcryptjs": "^2.4.3",
         "cookie-parser": "^1.4.4",
         "jsonwebtoken": "^8.5.1",

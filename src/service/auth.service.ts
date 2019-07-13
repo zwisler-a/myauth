@@ -1,10 +1,11 @@
 import { Service } from '@zwisler/bridge';
 
-import { UserService } from './user.service';
-import { JwtService } from './jwt.service';
-import { RealmService } from './realm.service';
-import { PropertyService } from './property.service';
 import { User } from '../model/user.model';
+import { JwtService } from './jwt.service';
+import { PropertyService } from './property.service';
+import { RealmService } from './realm.service';
+import { UserService } from './user.service';
+
 const bcrypt = require('bcryptjs');
 const uuid = require('uuid/v1');
 
@@ -23,26 +24,25 @@ export class AuthService {
     }
 
     createUserToken(user: User) {
-        return this.jwtService.createToken({ userId: user.id });
+        return this.jwtService.createToken({ id: user.id, name: user.name, admin: user.admin });
     }
 
     async createRealmToken(user: User, realmId: string) {
         delete user.password;
         const jwtPayload = {
             id: user.id,
-            name: user.name
+            name: user.name,
+            admin: user.admin
         };
         const realm = await this.realmService.get(realmId);
-        if (realmId && realmId != '') {
-            if (realm.properties) {
-                const propPromises = realm.properties.map(async propDef => {
-                    const props = await this.propService.get(user.id, propDef.id);
-                    return { name: propDef.name, defId: propDef.id, values: props };
-                });
-                jwtPayload['properties'] = await Promise.all(propPromises);
-            }
+        if (realm && realm.properties) {
+            const propPromises = realm.properties.map(async propDef => {
+                const props = await this.propService.get(user.id, propDef.id);
+                return { name: propDef.name, defId: propDef.id, values: props };
+            });
+            jwtPayload['properties'] = await Promise.all(propPromises);
         }
-        return this.jwtService.createToken(jwtPayload, realm.secret);
+        return this.jwtService.createToken(jwtPayload, realm ? realm.secret : null);
     }
 
     createSignInToken(realmToken) {

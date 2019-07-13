@@ -6,7 +6,7 @@ export class AuthService {
 
     constructor() {
         this._urls = {
-            getToken: '/auth/getToken?loginToken=',
+            getToken: '/auth/getToken?signInToken=',
             login: '/auth/login?redirect=' + encodeURIComponent('http://localhost:3333/admin.html') + '&realmId=' + '6826dd1b-33c0-457c-b0ae-cb844702f742'
         };
     }

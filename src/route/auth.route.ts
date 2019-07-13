@@ -37,22 +37,21 @@ export class AuthRoute {
     async login(username: string, password: string, realmId: string, redirect: string, @CustomParam('express-response') res) {
         try {
             const [token, userToken] = await this.authService.getSignInToken(username, password, realmId);
-            const realm = await this.realmService.get(realmId);
-            if (!realm) throw new Error('Unknown realm!');
             // TODO check redirects
             res.cookie(this.COOKIE_NAME, userToken, { maxAge: 900000, httpOnly: true });
             res.redirect(redirect + '?token=' + token);
         } catch (e) {
             res.redirect('/index.html?error=true');
         }
+        return new NoResponse();
     }
 
     @Endpoint()
-    getToken(loginToken: string) {
-        return this.authService.getRealmToken(loginToken);
+    getToken(signInToken: string) {
+        return this.authService.getRealmToken(signInToken);
     }
 
-    @Endpoint({ method: 'POST' })
+    @Endpoint({ method: 'POST', middleware: [JwtService.authenticate()] })
     register(username: string, password: string) {
         return this.authService.register(username, password);
     }

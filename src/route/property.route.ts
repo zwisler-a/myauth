@@ -1,6 +1,6 @@
-import { Route, Endpoint } from '@zwisler/bridge';
+import { Endpoint, Route } from '@zwisler/bridge';
+
 import { PropertyService } from '../service/property.service';
-import { create } from 'domain';
 
 @Route({ basePath: '/props' })
 export class PropertyRoute {
@@ -12,8 +12,23 @@ export class PropertyRoute {
     }
 
     @Endpoint()
-    get(realmId: string) {
+    getDefinition(realmId: string) {
         return this.propService.getDefinitions(realmId);
+    }
+
+    @Endpoint()
+    get(userId: string, propertyDefinitionId: string) {
+        throw new Error('Not yet implemented');
+    }
+
+    @Endpoint({ method: 'POST' })
+    update(propertyId: number, value: string) {
+        throw new Error('Not yet implemented');
+    }
+
+    @Endpoint({ method: 'DELETE' })
+    delete(propertyId: number) {
+        throw new Error('Not yet implemented');
     }
 
     @Endpoint({ method: 'POST' })

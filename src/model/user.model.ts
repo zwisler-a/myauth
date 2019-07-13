@@ -10,6 +10,9 @@ export class User {
     name: string;
 
     @Column()
+    admin: boolean;
+
+    @Column()
     password: string;
 
     @OneToMany(() => Property, property => property.user)

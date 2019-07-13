@@ -17,6 +17,9 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const config: Config = require('./config.json');
 const cookieParser = require('cookie-parser');
+const fs = require('fs');
+
+JwtService.secret = fs.readFileSync(config.jwtSecret);
 
 @Server({
     debug: config.debug,

@@ -1,20 +1,31 @@
 import { Service } from '@zwisler/bridge';
-import { Config } from '../config.class';
+
 const jwt = require('jsonwebtoken');
-const fs = require('fs');
 
 @Service()
 export class JwtService {
-    private secret: string;
+    static secret: string;
 
-    constructor(config: Config) {
-        this.secret = fs.readFileSync(config.jwtSecret);
-    }
     createToken(payload: {}, secret?: string) {
-        return jwt.sign(payload, secret || this.secret);
+        return jwt.sign(payload, secret || JwtService.secret);
     }
 
     verify(token: string, secret?: string) {
-        return jwt.verify(token, secret || this.secret);
+        return jwt.verify(token, secret || JwtService.secret);
+    }
+
+    static authenticate() {
+        return (req, res, next) => {
+            const authHeader = req.header('x-auth');
+            if (!authHeader) return res.status(401).send('No x-auth token found!');
+            try {
+                const tokenPayload = jwt.verify(authHeader, JwtService.secret);
+                if (tokenPayload.admin) {
+                    next();
+                }
+            } catch (e) {
+                return res.status(401).send('Invalid token!');
+            }
+        };
     }
 }
