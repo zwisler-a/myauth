@@ -22,6 +22,8 @@ export class JwtService {
                 const tokenPayload = jwt.verify(authHeader, JwtService.secret);
                 if (tokenPayload.admin) {
                     next();
+                } else {
+                    res.status(403).send();
                 }
             } catch (e) {
                 return res.status(401).send('Invalid token!');

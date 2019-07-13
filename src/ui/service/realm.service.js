@@ -1,3 +1,5 @@
+import { AuthService } from './auth.service.js';
+
 export class RealmService {
     static getInstance() {
         if (this._instance) return this._instance;
@@ -11,7 +13,7 @@ export class RealmService {
     }
 
     getRealms() {
-        return fetch(this._api.all)
+        return fetch(this._api.all, { headers: { 'x-auth': AuthService.getInstance()._token } })
             .then(res => res.json())
             .then(res => {
                 this._realms = res.data;

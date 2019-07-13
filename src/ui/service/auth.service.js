@@ -17,7 +17,6 @@ export class AuthService {
             .then(res => {
                 if (res.error) return (window.location = this._urls.login);
                 this._token = res.data;
-                console.log(this._token);
                 return this._token;
             });
     }
