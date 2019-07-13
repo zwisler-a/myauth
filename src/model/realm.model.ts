@@ -13,7 +13,7 @@ export class Realm {
     @Column()
     domains: string;
 
-    @Column({ length: 1000 })
+    @Column()
     secret: string;
 
     @OneToMany(() => PropertyDefinition, property => property.realm, { eager: true })

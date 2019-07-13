@@ -7,12 +7,12 @@ export class AuthService {
     constructor() {
         this._urls = {
             getToken: '/auth/getToken?signInToken=',
-            login: '/auth/login?redirect=' + encodeURIComponent('http://localhost:3333/admin.html') + '&realmId=' + '6826dd1b-33c0-457c-b0ae-cb844702f742'
+            login: '/auth/login?redirect=' + encodeURIComponent('http://auth.zwisler.dev/admin.html') + '&realmId=' + ''
         };
     }
 
     getToken(loginToken) {
-        fetch(this._urls.getToken + loginToken)
+        return fetch(this._urls.getToken + loginToken)
             .then(res => res.json())
             .then(res => {
                 if (res.error) return (window.location = this._urls.login);

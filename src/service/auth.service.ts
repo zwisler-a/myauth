@@ -32,7 +32,8 @@ export class AuthService {
         const jwtPayload = {
             id: user.id,
             name: user.name,
-            admin: user.admin
+            admin: user.admin,
+            realmId: realmId
         };
         const realm = await this.realmService.get(realmId);
         if (realm && realm.properties) {
@@ -42,7 +43,7 @@ export class AuthService {
             });
             jwtPayload['properties'] = await Promise.all(propPromises);
         }
-        return this.jwtService.createToken(jwtPayload, realm ? realm.secret : null);
+        return this.jwtService.createToken(jwtPayload, realm ? realm.secret : undefined);
     }
 
     createSignInToken(realmToken) {

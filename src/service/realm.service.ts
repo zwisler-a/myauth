@@ -34,7 +34,6 @@ export class RealmService {
 
     async get(realmId: string) {
         const realm = await this.realmRepo.findOne(realmId);
-        if (realm) delete realm.secret;
         return realm;
     }
 }
