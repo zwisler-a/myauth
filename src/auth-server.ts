@@ -14,6 +14,7 @@ import { PropertyService } from './service/property.service';
 import { PropertyRoute } from './route/property.route';
 
 const path = require('path');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const config: Config = require('./config.json');
 const cookieParser = require('cookie-parser');
@@ -25,7 +26,7 @@ JwtService.secret = fs.readFileSync(config.jwtSecret);
     debug: config.debug,
     port: config.port,
     resolve: InitServer,
-    middleware: [cookieParser(), bodyParser.urlencoded({ extended: false })],
+    middleware: [cors(), cookieParser(), bodyParser.urlencoded({ extended: false })],
     staticPath: path.join(__dirname, 'ui/'),
     providers: [OrmService, AuthService, UserService, RealmService, PropertyService, JwtService, { provide: Config, useValue: config }],
     routes: [AuthRoute, UserRoute, RealmRoute, PropertyRoute]
