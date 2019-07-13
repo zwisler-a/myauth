@@ -17,8 +17,26 @@ export class AuthService {
             .then(res => {
                 if (res.error) return (window.location = this._urls.login);
                 this._token = res.data;
+                window.history.replaceState({}, document.title, '/' + 'admin.html');
                 return this._token;
             });
+    }
+
+    removeUrlParameter(url, parameter) {
+        const urlParts = url.split('?');
+        if (urlParts.length >= 2) {
+            const urlBase = urlParts.shift();
+            const queryString = urlParts.join('?');
+            const prefix = encodeURIComponent(parameter) + '=';
+            const parts = queryString.split(/[&;]/g);
+            for (let i = parts.length; i-- > 0; ) {
+                if (parts[i].lastIndexOf(prefix, 0) !== -1) {
+                    parts.splice(i, 1);
+                }
+            }
+            url = urlBase + '?' + parts.join('&');
+        }
+        return url;
     }
 
     async checkLogin() {

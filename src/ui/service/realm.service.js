@@ -8,7 +8,7 @@ export class RealmService {
 
     constructor() {
         this._api = {
-            all: 'realm/get'
+            all: 'realm/all'
         };
     }
 
