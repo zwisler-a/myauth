@@ -19,7 +19,7 @@ export class AuthRoute {
         if (authCookie) {
             const userId = this.jwtService.verify(authCookie).userId;
             const user = await this.userService.getUser(userId);
-            res.redirect(redirect + '?token=' + this.authService.createSignInToken(await this.authService.createRealmToken(user, realmId)));
+            return res.redirect(redirect + '?token=' + this.authService.createSignInToken(await this.authService.createRealmToken(user, realmId)));
         }
 
         res.sendFile(path.join(__dirname, '../ui/index.html'));

@@ -23,12 +23,12 @@ export class RealmRoute {
     }
 
     @Endpoint({ method: 'POST' })
-    update(realmId: string, name: string, domains: string, secret: string) {
-        return this.realmService.update(realmId, name, domains, secret);
+    update(id: string, name: string, domains: string, secret: string) {
+        return this.realmService.update(id, name, domains, secret);
     }
 
     @Endpoint({ method: 'DELETE' })
     delete(realmId: string) {
-        throw new Error('Not yet implemented!');
+        return this.realmService.delete(realmId);
     }
 }

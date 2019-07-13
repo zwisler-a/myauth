@@ -1,3 +1,5 @@
+import { REDIRECT_TO, LOGIN_URL, REALM_ID } from '../env/env.js';
+
 export class AuthService {
     static getInstance() {
         if (this._instance) return this._instance;
@@ -7,7 +9,7 @@ export class AuthService {
     constructor() {
         this._urls = {
             getToken: '/auth/getToken?signInToken=',
-            login: '/auth/login?redirect=' + encodeURIComponent('http://auth.zwisler.dev/admin.html') + '&realmId=' + ''
+            login: LOGIN_URL + '?redirect=' + encodeURIComponent(REDIRECT_TO) + '&realmId=' + REALM_ID
         };
     }
 

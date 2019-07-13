@@ -11,12 +11,8 @@ export class RealmService {
         this.realmRepo = ormService.connection.getRepository(Realm);
     }
 
-    async getAll() {
-        const realms = await this.realmRepo.find();
-        realms.forEach(realm => {
-            delete realm.secret;
-        });
-        return realms;
+    getAll() {
+        return this.realmRepo.find();
     }
 
     async update(realmId: string, name: string, domains: string, secret: string) {
@@ -30,6 +26,14 @@ export class RealmService {
     save(name: string, domains: string, secret: string) {
         const realm = new Realm(name, domains, secret);
         return this.realmRepo.save(realm);
+    }
+
+    delete(realmId: string) {
+        return this.realmRepo
+            .createQueryBuilder()
+            .delete()
+            .where('id = :realmId', { realmId })
+            .execute();
     }
 
     async get(realmId: string) {
