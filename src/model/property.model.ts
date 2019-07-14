@@ -2,10 +2,10 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class Property {
-    @PrimaryColumn()
+    @PrimaryColumn({ type: 'int' })
     definitionId: number;
 
-    @PrimaryColumn()
+    @PrimaryColumn({ type: 'varchar', length: 40 })
     userId: string;
 
     @Column()
