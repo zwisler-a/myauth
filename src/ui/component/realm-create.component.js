@@ -29,7 +29,8 @@ export class RealmCreateComponent extends HTMLElement {
         const realm = await this._realmService.createRealm({
             name: this._inputs.name.value,
             secret: this._inputs.secret.value,
-            domains: this._inputs.domains.value
+            domains: this._inputs.domains.value,
+            customStyles: this._inputs.customStyles.value
         });
         this.dispatchEvent(new CustomEvent('realm_created', { bubbles: true, detail: realm.id }));
     }
@@ -39,10 +40,12 @@ export class RealmCreateComponent extends HTMLElement {
         const name = this._createInput('Name', '', this._newRealmInfo);
         const domains = this._createInput('Domains', '', this._newRealmInfo);
         const secret = this._createInput('Secret', '', this._newRealmInfo);
+        const customStyles = this._createInput('Custom Styles', '', this._newRealmInfo);
         this._inputs = {
             name,
             domains,
-            secret
+            secret,
+            customStyles
         };
     }
 

@@ -21,8 +21,13 @@ export class AuthRoute {
             const user = await this.userService.getUser(userId);
             return res.redirect(redirect + '?token=' + this.authService.createSignInToken(await this.authService.createRealmToken(user, realmId)));
         }
-
-        res.sendFile(path.join(__dirname, '../ui/index.html'));
+        const customStyleIdentifier = '<!-- $custom-styles -->';
+        let loginPage: string = fs.readFileSync(path.join(__dirname, '../ui/login.html')).toString();
+        const realm = await this.realmService.get(realmId);
+        if (realm) {
+            loginPage = loginPage.replace(customStyleIdentifier, '<style>' + realm.customStyles + '</style>');
+        }
+        res.send(loginPage);
         return new NoResponse();
     }
 

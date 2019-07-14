@@ -52,6 +52,7 @@ export class RealmInfoComponent extends HTMLElement {
             id: this._inputs.id.value,
             name: this._inputs.name.value,
             secret: this._inputs.secret.value,
+            customStyles: this._inputs.customStyles.value,
             domains: this._inputs.domains.value
         });
 
@@ -65,11 +66,13 @@ export class RealmInfoComponent extends HTMLElement {
         const id = this._createInput('ID', realm.id, this._realmInfo, true);
         const domains = this._createInput('Domains', realm.domains, this._realmInfo);
         const secret = this._createInput('Secret', realm.secret, this._realmInfo);
+        const customStyles = this._createInput('custom Styles', realm.customStyles, this._realmInfo);
         this._inputs = {
             name,
             id,
             domains,
-            secret
+            secret,
+            customStyles
         };
 
         const properties = document.createElement('auth-realm-properties');

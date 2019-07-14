@@ -10,6 +10,9 @@ export class Realm {
     @Column()
     name: string;
 
+    @Column({ type: 'text' })
+    customStyles: string;
+
     @Column()
     domains: string;
 
@@ -19,9 +22,10 @@ export class Realm {
     @OneToMany(() => PropertyDefinition, property => property.realm, { eager: true })
     properties: PropertyDefinition[];
 
-    constructor(name: string, domains: string, secret: string) {
+    constructor(name: string, domains: string, secret: string, customStyle: string) {
         this.name = name;
         this.domains = domains;
         this.secret = secret;
+        this.customStyles = customStyle;
     }
 }

@@ -23,13 +23,13 @@ export class RealmRoute {
     }
 
     @Endpoint({ method: 'POST' })
-    create(name: string, domains: string, secret: string) {
-        return this.realmService.save(name, domains, secret);
+    create(name: string, domains: string, secret: string, customStyles: string) {
+        return this.realmService.save(name, domains, secret, customStyles);
     }
 
     @Endpoint({ method: 'POST' })
-    update(id: string, name: string, domains: string, secret: string) {
-        return this.realmService.update(id, name, domains, secret);
+    update(id: string, name: string, domains: string, secret: string, customStyles:string) {
+        return this.realmService.update(id, name, domains, secret, customStyles);
     }
 
     @Endpoint({ method: 'DELETE' })

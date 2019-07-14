@@ -22,16 +22,17 @@ export class RealmService {
             .getRawMany();
     }
 
-    async update(realmId: string, name: string, domains: string, secret: string) {
+    async update(realmId: string, name: string, domains: string, secret: string, customStyle: string) {
         const realm = await this.realmRepo.findOne(realmId);
         realm.name = name;
         realm.domains = domains;
         realm.secret = secret;
+        realm.customStyles = customStyle;
         return this.realmRepo.save(realm);
     }
 
-    save(name: string, domains: string, secret: string) {
-        const realm = new Realm(name, domains, secret);
+    save(name: string, domains: string, secret: string, customStyle:string) {
+        const realm = new Realm(name, domains, secret, customStyle);
         return this.realmRepo.save(realm);
     }
 
