@@ -55,6 +55,13 @@ export class RealmListComponent extends HTMLElement {
         newRealmBtn.innerText = 'Neues Realm erstellen';
         newRealmBtn.addEventListener('click', this.createNewRealm.bind(this));
         list.appendChild(newRealmBtn);
+
+        const spacer = document.createElement('span');
+        spacer.style.flex = '1 1 auto';
+        list.appendChild(spacer);
+
+        list.appendChild(document.createElement('auth-logout'));
+
         this.appendChild(list);
     }
 

@@ -10,7 +10,7 @@
         html {
             width: 100%;
             height: 100%;
-            background: #f8f8f8;
+            background: #ececec;
         }
 
         form.error {
@@ -60,7 +60,7 @@
             margin-right: 8px;
             height: 24px;
             border-radius: 100%;
-            border: solid 1px red;
+            border: solid 2px red;
         }
         #errorMessage {
             display: none;
@@ -80,11 +80,11 @@
             <div id="errorMessage" class="hidden">Benutzername oder Passwort sind inkorrekt!</div>
             <div class="input-field">
                 <span>Username</span>
-                <input name="username" placeholder="Username" />
+                <input required name="username" placeholder="Username" />
             </div>
             <div class="input-field">
                 <span>Password</span>
-                <input name="password" type="password" placeholder="Password" />
+                <input required name="password" type="password" placeholder="Password" />
             </div>
             <input name="realmId" type="hidden" />
             <input name="redirect" type="hidden" />
@@ -114,5 +114,6 @@
         var redir = document.querySelector('[name="redirect"]');
         redir.setAttribute('value', getParameterByName('redirect'));
         // redir.value = getParameterByName('redirect');
+        // if (window.history && window.history.pushState) window.history.pushState('', '', '/auth/login');
     </script>
 </html>

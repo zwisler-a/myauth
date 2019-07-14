@@ -41,7 +41,7 @@ export class AuthRoute {
             res.cookie(this.COOKIE_NAME, userToken, { maxAge: 900000, httpOnly: true });
             res.redirect(redirect + '?token=' + token);
         } catch (e) {
-            res.redirect('/index.html?error=true');
+            res.redirect('/index.html?error=true&realmId=' + realmId + '&redirect=' + redirect);
         }
         return new NoResponse();
     }
