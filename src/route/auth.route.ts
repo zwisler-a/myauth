@@ -7,13 +7,22 @@ import { JwtService } from '../service/jwt.service';
 const fs = require('fs');
 const path = require('path');
 
+// TODO remove when bridge has Optional params
+const removeQuery = toRemove => (req, res, next) => {
+    delete req.query[toRemove];
+    next();
+};
+
 @Route({ basePath: '/auth' })
 export class AuthRoute {
     readonly COOKIE_NAME = 'auth';
 
     constructor(private authService: AuthService, private realmService: RealmService, private userService: UserService, private jwtService: JwtService) {}
 
-    @Endpoint({ route: 'login' })
+    @Endpoint({
+        route: 'login',
+        middleware: [removeQuery('error')]
+    })
     async loginPage(realmId: string, redirect: string, @CustomParam('express-request') req, @CustomParam('express-response') res) {
         const authCookie = req.cookies[this.COOKIE_NAME];
         if (authCookie) {
@@ -46,7 +55,7 @@ export class AuthRoute {
             res.cookie(this.COOKIE_NAME, userToken, { maxAge: 900000, httpOnly: true });
             res.redirect(redirect + '?token=' + token);
         } catch (e) {
-            res.redirect('/index.html?error=true&realmId=' + realmId + '&redirect=' + redirect);
+            res.redirect('/auth/login?error=true&realmId=' + realmId + '&redirect=' + redirect);
         }
         return new NoResponse();
     }
