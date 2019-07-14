@@ -19,7 +19,7 @@ export class AuthService {
             .then(res => {
                 if (res.error) return (window.location = this._urls.login);
                 this._token = res.data;
-                window.history.replaceState({}, document.title, '/' + 'admin.html');
+                window.history.replaceState({}, document.title, '/' + 'realm.html');
                 return this._token;
             });
     }

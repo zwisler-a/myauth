@@ -1,5 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { Property } from './property.model';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -14,9 +13,6 @@ export class User {
 
     @Column()
     password: string;
-
-    @OneToMany(() => Property, property => property.user)
-    properties: Property[];
 
     constructor(name: string, password: string) {
         this.name = name;

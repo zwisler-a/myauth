@@ -39,7 +39,7 @@ export class AuthService {
         if (realm && realm.properties) {
             const propPromises = realm.properties.map(async propDef => {
                 const props = await this.propService.get(user.id, propDef.id);
-                return { name: propDef.name, defId: propDef.id, values: props };
+                return { name: propDef.name, defId: propDef.id, value: props.value };
             });
             jwtPayload['properties'] = await Promise.all(propPromises);
         }

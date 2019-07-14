@@ -28,8 +28,17 @@ export class RealmInfoComponent extends HTMLElement {
         btnDelete.addEventListener('click', this._deleteRealm.bind(this));
         btnDelete.innerText = 'Delete';
 
-        this._actions.appendChild(btnDelete);
+        const headline = document.createElement('div');
+        headline.classList.add('headline');
+        headline.innerText = 'Realm Info';
+        this._actions.appendChild(headline);
+
+        const spacer = document.createElement('span');
+        spacer.style.flex = '1 1 auto';
+        this._actions.appendChild(spacer);
+
         this._actions.appendChild(btnEdit);
+        this._actions.appendChild(btnDelete);
     }
 
     async _deleteRealm() {
@@ -62,8 +71,9 @@ export class RealmInfoComponent extends HTMLElement {
             domains,
             secret
         };
-        const properties = document.createElement('div');
-        properties.innerHTML = `Properties: <ul>${realm.properties.map(prop => `<li>${prop.name}</li>`)}</ul>`;
+
+        const properties = document.createElement('auth-realm-properties');
+        properties.setAttribute('realmId', realm.id);
         this._realmInfo.appendChild(properties);
     }
 

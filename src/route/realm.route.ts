@@ -13,6 +13,11 @@ export class RealmRoute {
     }
 
     @Endpoint()
+    async allshort() {
+        return this.realmService.getSmallList();
+    }
+
+    @Endpoint()
     get(realmId: string) {
         return this.realmService.get(realmId);
     }

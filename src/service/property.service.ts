@@ -14,14 +14,28 @@ export class PropertyService {
     }
 
     get(userId: string, propertyDefId: number) {
-        return this.propRepo.find({ where: { user: userId, definition: propertyDefId } });
+        return this.propRepo.findOne({ userId: userId, definitionId: propertyDefId });
+    }
+
+    async updateDefinition(definitionId: string, name: string) {
+        const definition = await this.propDefRepo.findOne(definitionId);
+        definition.name = name;
+        return this.propDefRepo.save(definition);
+    }
+
+    deleteDefinition(definitionId: string) {
+        return this.propDefRepo
+            .createQueryBuilder()
+            .delete()
+            .where('id = :definitionId', { definitionId })
+            .execute();
     }
 
     createProperty(userId: string, propertyDefId: string, value: string) {
         const newProp = new Property();
-        newProp.definition = propertyDefId as any;
+        newProp.definitionId = propertyDefId as any;
         newProp.value = value;
-        newProp.user = userId as any;
+        newProp.userId = userId as any;
         return this.propRepo.save(newProp);
     }
 

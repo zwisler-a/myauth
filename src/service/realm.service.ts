@@ -15,6 +15,13 @@ export class RealmService {
         return this.realmRepo.find();
     }
 
+    getSmallList(): any {
+        return this.realmRepo
+            .createQueryBuilder()
+            .select(['id', 'name'])
+            .getRawMany();
+    }
+
     async update(realmId: string, name: string, domains: string, secret: string) {
         const realm = await this.realmRepo.findOne(realmId);
         realm.name = name;
@@ -36,8 +43,7 @@ export class RealmService {
             .execute();
     }
 
-    async get(realmId: string) {
-        const realm = await this.realmRepo.findOne(realmId);
-        return realm;
+    get(realmId: string) {
+        return this.realmRepo.findOne(realmId);
     }
 }

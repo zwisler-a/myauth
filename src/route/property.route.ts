@@ -12,27 +12,27 @@ export class PropertyRoute {
     }
 
     @Endpoint()
-    getDefinition(realmId: string) {
+    getDefinitions(realmId: string) {
         return this.propService.getDefinitions(realmId);
     }
 
-    @Endpoint()
-    get(userId: string, propertyDefinitionId: string) {
-        throw new Error('Not yet implemented');
-    }
-
-    @Endpoint({ method: 'POST' })
-    update(propertyId: number, value: string) {
-        throw new Error('Not yet implemented');
-    }
-
     @Endpoint({ method: 'DELETE' })
-    delete(propertyId: number) {
+    deleteDefinitions(definitionId: string) {
+        this.propService.deleteDefinition(definitionId);
+    }
+
+    @Endpoint({ method: 'POST' })
+    updateDefinition(definitionId: string, name: string) {
+        this.propService.updateDefinition(definitionId, name);
+    }
+
+    @Endpoint()
+    get(userId: string, definitionId: string) {
         throw new Error('Not yet implemented');
     }
 
     @Endpoint({ method: 'POST' })
-    create(userId: string, propertyDefinitionId: string, value: string) {
-        return this.propService.createProperty(userId, propertyDefinitionId, value);
+    update(userId: string, definitionId: number, value: string) {
+        throw new Error('Not yet implemented');
     }
 }

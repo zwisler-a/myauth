@@ -27,7 +27,7 @@ export class RealmListComponent extends HTMLElement {
 
     onClick(event) {
         const clickedEl = event.target.closest('div');
-        if (!clickedEl || !clickedEl.hasAttribute('id')) return;
+        if (!clickedEl || !clickedEl.hasAttribute('id') || !clickedEl.hasAttribute('realm-list-el')) return;
         this._displayRealm(clickedEl.getAttribute('id'));
     }
 
@@ -46,6 +46,7 @@ export class RealmListComponent extends HTMLElement {
         realms.forEach(realm => {
             const el = document.createElement('div');
             el.setAttribute('id', realm.id);
+            el.setAttribute('realm-list-el', true);
             el.innerText = realm.name;
             list.appendChild(el);
         });

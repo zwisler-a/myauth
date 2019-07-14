@@ -16,7 +16,7 @@ button:hover {
 }
 button {
     transition: background 0.2s;
-    padding: 10px 32px;
+    padding: 11px 32px;
     cursor: pointer;
     background: #f5f5f5;
     border: solid 1px #d4d4d4;
@@ -47,12 +47,17 @@ auth-realm-list {
 }
 
 .actions {
-    border-bottom: solid 1px #f5f5f5;
-    padding-bottom: 8px;
-    margin-bottom: 8px;
+    border-bottom: solid 1px #dadada;
+    border-top: solid 1px #dadada;
+    padding: 8px 0;
+    margin: 8px 0;
+    align-items: center;
     display: flex;
-    flex-direction: row-reverse;
 }
+.actions .headline {
+    font-weight: bold;
+}
+
 auth-realm-info,
 auth-realm-create {
     padding: 8px 16px;

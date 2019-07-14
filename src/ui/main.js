@@ -5,4 +5,5 @@ import { AuthService } from './service/auth.service.js';
     import('./component/realm-list.component.js');
     import('./component/realm-info.component.js');
     import('./component/realm-create.component.js');
+    import('./component/realm-properties.component.js');
 })();

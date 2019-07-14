@@ -1,18 +1,12 @@
-import { Entity, ManyToOne, PrimaryGeneratedColumn, Column } from 'typeorm';
-
-import { PropertyDefinition } from './property-definition.model';
-import { User } from './user.model';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class Property {
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryColumn()
+    definitionId: number;
 
-    @ManyToOne(() => PropertyDefinition, propDef => propDef.propteries)
-    definition: PropertyDefinition;
-
-    @ManyToOne(() => User, user => user.properties)
-    user: User;
+    @PrimaryColumn()
+    userId: string;
 
     @Column()
     value: string;
