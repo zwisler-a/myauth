@@ -68,7 +68,7 @@ export class AuthService {
         if (await this.userService.userExists(username)) {
             throw new Error('Username already exists');
         }
-        const user = await this.userService.create(username, await bcrypt.hash(password, 8));
+        const user = await this.userService.create(username,password);
         delete user.password;
         return user;
     }

@@ -57,6 +57,7 @@ export class RealmCreateComponent extends HTMLElement {
 
     _createInput(name, value, parent, disabled) {
         const wrapper = document.createElement('div');
+        wrapper.classList.add('input-wrapper');
         wrapper.innerHTML = `<span class="input-label">${name}: </span>`;
         const input = document.createElement('input');
         input.value = value;

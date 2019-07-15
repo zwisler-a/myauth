@@ -28,7 +28,8 @@ export class AuthRoute {
         if (authCookie) {
             const userId = this.jwtService.verify(authCookie).userId;
             const user = await this.userService.getUser(userId);
-            return res.redirect(redirect + '?token=' + this.authService.createSignInToken(await this.authService.createRealmToken(user, realmId)));
+            res.redirect(redirect + '?token=' + this.authService.createSignInToken(await this.authService.createRealmToken(user, realmId)));
+            return new NoResponse();
         }
         const customStyleIdentifier = '<!-- $custom-styles -->';
         let loginPage: string = fs.readFileSync(path.join(__dirname, '../ui/login.html')).toString();
@@ -67,6 +68,7 @@ export class AuthRoute {
 
     @Endpoint({ method: 'POST', middleware: [JwtService.authenticate()] })
     register(username: string, password: string) {
+        throw new Error('Not yet implemented!');
         return this.authService.register(username, password);
     }
 }
