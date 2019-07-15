@@ -31,7 +31,6 @@ export class AuthRoute {
                 this.logout('/', res);
             }
             const user = await this.userService.getUser(userId);
-            console.log('retrieve session', user.name);
             res.redirect(redirect + '?token=' + this.authService.createSignInToken(await this.authService.createRealmToken(user, realmId)));
             return new NoResponse();
         }
@@ -58,7 +57,6 @@ export class AuthRoute {
             const [token, userToken] = await this.authService.getSignInToken(username, password, realmId);
             // TODO check redirects
             res.cookie(this.COOKIE_NAME, userToken, { maxAge: 900000, httpOnly: true });
-            console.log('grant', username, 'access');
             res.redirect(redirect + '?token=' + token);
         } catch (e) {
             res.redirect('/auth/login?error=true&realmId=' + realmId + '&redirect=' + redirect);
