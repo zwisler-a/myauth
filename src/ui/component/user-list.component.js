@@ -10,6 +10,10 @@ export class UserListComponent extends HTMLElement {
     }
 
     connectedCallback() {
+
+        import('./user-info.component.js');
+        import('./user-create.component.js');
+
         this._loadList();
         this.addEventListener('load_user', async event => {
             await this._loadList();

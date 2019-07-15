@@ -10,6 +10,11 @@ export class RealmListComponent extends HTMLElement {
     }
 
     connectedCallback() {
+
+        import('./realm-info.component.js');
+        import('./realm-create.component.js');
+        import('./realm-properties.component.js');
+
         this._loadList();
         this.addEventListener('realm_created', async event => {
             await this._loadList();

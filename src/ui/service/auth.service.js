@@ -20,16 +20,19 @@ export class AuthService {
                 if (res.error) return (window.location = this._urls.login);
                 this._token = res.data;
                 window.history.replaceState({}, document.title, '/');
+                this.getName();
                 return this._token;
             });
     }
 
     async checkLogin() {
-        const storedToken = localStorage.getItem('token');
-        if (storedToken) return;
         const queryToken = this._getParameterByName('token');
         if (queryToken) return this.getToken(queryToken);
         window.location = this._urls.login;
+    }
+
+    getName() {
+        return JSON.parse(atob(this._token.split('.')[1])).name;
     }
 
     _getParameterByName(name, url) {

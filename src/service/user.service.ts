@@ -16,7 +16,6 @@ export class UserService {
     getUser(userId: string): Promise<User> {
         return this.userRepo.findOne(userId);
     }
-
     async updateUser(userId: string, name?: string, password?: string, admin?: boolean) {
         const user = await this.userRepo.findOneOrFail(userId);
         if (name) user.name = name;
