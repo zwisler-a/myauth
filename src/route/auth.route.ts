@@ -31,7 +31,12 @@ export class AuthRoute {
                 this.logout('/', res);
             }
             const user = await this.userService.getUser(userId);
-            res.redirect(redirect + '?token=' + this.authService.createSignInToken(await this.authService.createRealmToken(user, realmId)));
+            const realm = await this.realmService.get(realmId);
+            if (!realm || !realm.domains || new RegExp(realm.domains).test(redirect)) {
+                res.redirect(redirect + '?token=' + this.authService.createSignInToken(await this.authService.createRealmToken(user, realmId)));
+            } else {
+                res.send('Invalid redirect');
+            }
             return new NoResponse();
         }
         const customStyleIdentifier = '<!-- $custom-styles -->';
@@ -51,14 +56,20 @@ export class AuthRoute {
         return new NoResponse();
     }
 
-    @Endpoint({ method: 'POST' })
+    @Endpoint({ method: 'POST', middleware: [removeQuery('error')] })
     async login(username: string, password: string, realmId: string, redirect: string, @CustomParam('express-response') res) {
         try {
             const [token, userToken] = await this.authService.getSignInToken(username, password, realmId);
             // TODO check redirects
-            res.cookie(this.COOKIE_NAME, userToken, { maxAge: 900000, httpOnly: true });
-            res.redirect(redirect + '?token=' + token);
+            const realm = await this.realmService.get(realmId);
+            if (!realm || !realm.domains || new RegExp(realm.domains).test(redirect)) {
+                res.cookie(this.COOKIE_NAME, userToken, { maxAge: 900000, httpOnly: true });
+                res.redirect(redirect + '?token=' + token);
+            } else {
+                res.send('Invalid redirect');
+            }
         } catch (e) {
+            console.log(e);
             res.redirect('/auth/login?error=true&realmId=' + realmId + '&redirect=' + redirect);
         }
         return new NoResponse();
