@@ -32,6 +32,7 @@ export class AuthService {
     }
 
     getName() {
+        if (!this._token || !(this._token.split('.').length >= 1)) return '';
         return JSON.parse(atob(this._token.split('.')[1])).name;
     }
 
