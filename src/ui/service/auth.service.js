@@ -20,7 +20,6 @@ export class AuthService {
                 if (res.error) return (window.location = this._urls.login);
                 this._token = res.data;
                 window.history.replaceState({}, document.title, '/');
-                this.getName();
                 return this._token;
             });
     }
