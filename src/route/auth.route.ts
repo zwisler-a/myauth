@@ -4,6 +4,7 @@ import { AuthService } from '../service/auth.service';
 import { RealmService } from '../service/realm.service';
 import { UserService } from '../service/user.service';
 import { JwtService } from '../service/jwt.service';
+import { BridgeError } from '@zwisler/bridge/core/util/bridge.error';
 const fs = require('fs');
 const path = require('path');
 
@@ -84,5 +85,15 @@ export class AuthRoute {
     register(username: string, password: string) {
         throw new Error('Not yet implemented!');
         return this.authService.register(username, password);
+    }
+
+    @Endpoint({ method: 'POST' })
+    async createFirstUser(name: string, password: string) {
+        if (!(await this.userService.hasUsers())) {
+            const updatedUser = await this.userService.create(name, password, true);
+            delete updatedUser.password;
+            return updatedUser;
+        }
+        throw new BridgeError(401, '');
     }
 }

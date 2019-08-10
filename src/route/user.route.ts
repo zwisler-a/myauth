@@ -1,6 +1,7 @@
 import { Route, Endpoint } from '@zwisler/bridge';
 import { JwtService } from '../service/jwt.service';
 import { UserService } from '../service/user.service';
+import { BridgeError } from '@zwisler/bridge/core/util/bridge.error';
 
 @Route({ basePath: '/user', middleware: [JwtService.authenticate()] })
 export class UserRoute {

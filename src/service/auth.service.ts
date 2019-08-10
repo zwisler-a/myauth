@@ -65,9 +65,6 @@ export class AuthService {
     }
 
     async register(username: string, password: string) {
-        if (await this.userService.userExists(username)) {
-            throw new Error('Username already exists');
-        }
         const user = await this.userService.create(username,password);
         delete user.password;
         return user;
