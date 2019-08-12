@@ -26,6 +26,7 @@ JwtService.secret = fs.readFileSync(config.jwtSecret);
     debug: config.debug,
     port: config.port,
     resolve: InitServer,
+    basePath: 'api',
     middleware: [cors(), cookieParser(), bodyParser.urlencoded({ extended: false })],
     staticPath: path.join(__dirname, 'ui/'),
     providers: [OrmService, AuthService, UserService, RealmService, PropertyService, JwtService, { provide: Config, useValue: config }],
