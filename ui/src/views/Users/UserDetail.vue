@@ -1,7 +1,8 @@
 <template>
   <section>
     <loader v-if="!user"></loader>
-    <div v-else>
+    <div v-else class="card">
+      <h1>User details</h1>
       <key-value-input label="Name" v-model="user.name"></key-value-input>
       <key-value-input label="Id" readonly v-model="user.id"></key-value-input>
       <key-value-input type="password" label="Password" v-model="user.password"></key-value-input>

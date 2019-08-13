@@ -1,4 +1,9 @@
 export class AuthService {
+    public static logout(): any {
+        window.location.href =
+            // tslint:disable-next-line:max-line-length
+            this.urls.logout + '?redirect=' + encodeURIComponent(location.protocol + '//' + location.host + location.pathname);
+    }
     public static async checkLogin() {
         const queryToken = AuthService._getParameterByName('token');
         if (queryToken) {
@@ -20,8 +25,10 @@ export class AuthService {
     private static token: any;
     private static urls = {
         getToken: '/api/auth/getToken?signInToken=',
+        logout: process.env.VUE_APP_AUTH_HOST + 'api/auth/logout',
         login: () =>
-            process.env.VUE_APP_LOGIN_URL +
+            process.env.VUE_APP_AUTH_HOST +
+            'api/auth/login' +
             '?redirect=' +
             encodeURIComponent(location.protocol + '//' + location.host + location.pathname) +
             '&realmId=' +

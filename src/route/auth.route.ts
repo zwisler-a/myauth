@@ -71,7 +71,7 @@ export class AuthRoute {
             }
         } catch (e) {
             console.log(e);
-            res.redirect('/auth/login?error=true&realmId=' + realmId + '&redirect=' + redirect);
+            res.redirect('/api/auth/login?error=true&realmId=' + realmId + '&redirect=' + redirect);
         }
         return new NoResponse();
     }

@@ -4,18 +4,26 @@
     <router-link to="/realms">Realms</router-link>
     <router-link to="/logs">Logs</router-link>
     <span style="flex:1 1 auto;"></span>
-    <div>{{username}}</div>
+    <div class="userinfo" @click="logout">
+      <user-icon />
+      <span>{{username}}</span>
+    </div>
   </nav>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { AuthService } from '../services/auth.service';
+import UserIcon from './UserIcon.vue';
 
-@Component
+@Component({ components: { UserIcon } })
 export default class Navigation extends Vue {
   get username() {
     return AuthService.getUserData().name;
+  }
+
+  public logout() {
+    AuthService.logout();
   }
 }
 </script>
@@ -27,10 +35,16 @@ nav {
   display: flex;
   align-items: center;
   padding: 0 16px;
-  border-bottom: solid 1px lightgray;
+  background: var(--bg-color);
+  color: white;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
 }
 a:visited {
-  color: black;
+  color: unset;
+}
+.userinfo {
+  display: flex;
+  align-items: center;
 }
 a {
   padding: 16px;

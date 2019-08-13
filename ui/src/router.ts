@@ -14,6 +14,10 @@ export default new Router({
             component: Realms,
             children: [
                 {
+                    path: 'create',
+                    component: () => import(/* webpackChunkName: "realmcreate" */ './views/Realms/RealmCreate.vue')
+                },
+                {
                     path: ':id',
                     component: () => import(/* webpackChunkName: "realmdetail" */ './views/Realms/RealmDetail.vue')
                 }
@@ -24,6 +28,10 @@ export default new Router({
             name: 'Users',
             component: () => import(/* webpackChunkName: "about" */ './views/Users.vue'),
             children: [
+                {
+                    path: 'create',
+                    component: () => import(/* webpackChunkName: "usercreate" */ './views/Users/UserCreate.vue')
+                },
                 {
                     path: ':id',
                     component: () => import(/* webpackChunkName: "realmdetail" */ './views/Users/UserDetail.vue')

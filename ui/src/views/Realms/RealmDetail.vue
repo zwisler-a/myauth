@@ -2,7 +2,8 @@
   <section>
     <transition name="fade">
       <loader v-if="!realm"></loader>
-      <div v-else>
+      <div v-else class="card">
+        <h1>Realm Details</h1>
         <key-value-input label="Name" v-model="realm.name"></key-value-input>
         <key-value-input label="Id" readonly v-model="realm.id"></key-value-input>
         <key-value-input label="Domains" v-model="realm.domains"></key-value-input>
@@ -66,8 +67,3 @@ export default class RealmDetail extends Vue {
 
 }
 </script>
-<style scoped>
-section {
-  flex: 1 1 auto;
-}
-</style>

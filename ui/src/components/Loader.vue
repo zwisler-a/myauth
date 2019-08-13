@@ -28,6 +28,7 @@ export default class Loader extends Vue {
   position: relative;
   width: 64px;
   height: 64px;
+  margin: 0 auto;
 }
 .lds-facebook div {
   display: inline-block;

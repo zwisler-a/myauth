@@ -1,6 +1,9 @@
 <template>
   <nav>
-    <input v-model="searchQuery" v-bind:placeholder="searchPlaceholder" />
+    <div class="header">
+      <input v-model="searchQuery" v-bind:placeholder="searchPlaceholder" />
+      <router-link class="new" v-bind:to="createLink">+</router-link>
+    </div>
     <transition name="fade">
       <ul v-if="items.length">
         <li
@@ -21,6 +24,7 @@ import Loader from './Loader.vue';
 @Component({ components: { Loader } })
 export default class SubList extends Vue {
   @Prop() public searchPlaceholder!: string;
+  @Prop({ default: 'create' }) public createLink!: string;
   @Prop() public items!: Array<{ id: any, name: string }>;
 
   public searchQuery = '';
@@ -48,6 +52,9 @@ nav {
   flex-direction: column;
   flex: 0 0 190px;
   min-width: 190px;
+  padding: 0px 0px 16px 0px;
+
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
 }
 ul {
   list-style-type: none;
@@ -60,5 +67,19 @@ li:hover {
 }
 li {
   padding: 4px 16px;
+}
+.header .new {
+  background: none;
+  color: var(--font-color);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 10px 14px;
+  text-decoration: none;
+  background: white;
+  border: solid 1px lightgray;
+  border-left: none;
+}
+.header {
+  display: flex;
 }
 </style>

@@ -3,9 +3,9 @@
     <sub-list
       v-on:clicked="showRealm"
       v-bind:items="realms"
+      createLink="/realms/create"
       searchPlaceholder="Realms"
     ></sub-list>
-    <div class="seperator"></div>
     <router-view :key="$route.fullPath"></router-view>
   </main>
 </template>
@@ -45,10 +45,5 @@ export default class Realms extends Vue {
 main {
   display: flex;
   flex: 1 1 auto;
-  padding: 16px;
-}
-.seperator {
-  border: solid 1px lightgray;
-  margin: -16px 16px -16px 16px;
 }
 </style>

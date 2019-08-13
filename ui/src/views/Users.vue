@@ -1,7 +1,11 @@
 <template>
   <main>
-    <sub-list v-on:clicked="showUser" v-bind:items="users" searchPlaceholder="User"></sub-list>
-    <div class="seperator"></div>
+    <sub-list
+      v-on:clicked="showUser"
+      v-bind:items="users"
+      createLink="/users/create"
+      searchPlaceholder="User"
+    ></sub-list>
     <router-view :key="$route.fullPath"></router-view>
   </main>
 </template>
@@ -41,10 +45,5 @@ export default class Users extends Vue {
 main {
   display: flex;
   flex: 1 1 auto;
-  padding: 16px;
-}
-.seperator {
-  border: solid 1px lightgray;
-  margin: -16px 16px -16px 16px;
 }
 </style>
