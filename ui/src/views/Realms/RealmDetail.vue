@@ -1,15 +1,17 @@
 <template>
   <section>
-    <div v-if="!realm">Loading...</div>
-    <div v-else>
-      <key-value-input label="Name" v-model="realm.name"></key-value-input>
-      <key-value-input label="Id" readonly v-model="realm.id"></key-value-input>
-      <key-value-input label="Domains" v-model="realm.domains"></key-value-input>
-      <key-value-input label="Secret" v-model="realm.secret"></key-value-input>
-      <key-value-input label="Custom Styles" v-model="realm.customStyles"></key-value-input>
+    <transition name="fade">
+      <loader v-if="!realm"></loader>
+      <div v-else>
+        <key-value-input label="Name" v-model="realm.name"></key-value-input>
+        <key-value-input label="Id" readonly v-model="realm.id"></key-value-input>
+        <key-value-input label="Domains" v-model="realm.domains"></key-value-input>
+        <key-value-input label="Secret" v-model="realm.secret"></key-value-input>
+        <key-value-input label="Custom Styles" v-model="realm.customStyles"></key-value-input>
 
-      <button v-if="isDirty" @click="saveChanges">Save</button>
-    </div>
+        <button v-if="isDirty" @click="saveChanges">Save</button>
+      </div>
+    </transition>
   </section>
 </template>
 
@@ -18,8 +20,9 @@ import { Component, Vue } from 'vue-property-decorator';
 import { RealmService } from '../../services/realm.service';
 import { Notification } from '../../services/notif.service';
 import KeyValueInput from '../../components/KeyValueInput.vue';
+import Loader from '../../components/Loader.vue';
 
-@Component({ components: { KeyValueInput } })
+@Component({ components: { KeyValueInput, Loader } })
 export default class RealmDetail extends Vue {
   public realm = null;
   private realmCopy: any;
@@ -63,3 +66,8 @@ export default class RealmDetail extends Vue {
 
 }
 </script>
+<style scoped>
+section {
+  flex: 1 1 auto;
+}
+</style>

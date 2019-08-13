@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div v-if="!user">Loading...</div>
+    <loader v-if="!user"></loader>
     <div v-else>
       <key-value-input label="Name" v-model="user.name"></key-value-input>
       <key-value-input label="Id" readonly v-model="user.id"></key-value-input>
@@ -17,8 +17,9 @@ import { Component, Vue } from 'vue-property-decorator';
 import { Notification } from '../../services/notif.service';
 import KeyValueInput from '../../components/KeyValueInput.vue';
 import { UserService } from '../../services/user.service';
+import Loader from '../../components/Loader.vue';
 
-@Component({ components: { KeyValueInput } })
+@Component({ components: { KeyValueInput, Loader } })
 export default class UserDetail extends Vue {
   public user = null;
   private userCopy: any;

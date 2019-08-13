@@ -1,12 +1,6 @@
 <template>
   <main>
-    <sub-list
-      v-if="users.length"
-      v-on:clicked="showUser"
-      v-bind:items="users"
-      searchPlaceholder="User"
-    ></sub-list>
-    <div v-else>Loading...</div>
+    <sub-list v-on:clicked="showUser" v-bind:items="users" searchPlaceholder="User"></sub-list>
     <div class="seperator"></div>
     <router-view :key="$route.fullPath"></router-view>
   </main>

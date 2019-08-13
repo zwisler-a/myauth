@@ -12,6 +12,11 @@ export class AuthService {
         return this.token;
     }
 
+    public static getUserData() {
+        if (!this.token || !(this.token.split('.').length >= 1)) return '';
+        return JSON.parse(atob(this.token.split('.')[1]));
+    }
+
     private static token: any;
     private static urls = {
         getToken: '/api/auth/getToken?signInToken=',

@@ -1,12 +1,10 @@
 <template>
   <main>
     <sub-list
-      v-if="realms.length"
       v-on:clicked="showRealm"
       v-bind:items="realms"
       searchPlaceholder="Realms"
     ></sub-list>
-    <div v-else>Loading...</div>
     <div class="seperator"></div>
     <router-view :key="$route.fullPath"></router-view>
   </main>

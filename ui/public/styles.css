@@ -25,3 +25,10 @@ input {
 button {
   padding: 8px 16px;
 }
+
+.fade-enter-active {
+  transition: opacity 0.2s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
