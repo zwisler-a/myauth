@@ -8,8 +8,10 @@ export class UserRoute {
     constructor(private userService: UserService) {}
 
     @Endpoint()
-    get(id: string) {
-        return this.userService.getUser(id);
+    async get(id: string) {
+        const user = await this.userService.getUser(id);
+        delete user.password;
+        return user;
     }
 
     @Endpoint()

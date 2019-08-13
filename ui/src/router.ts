@@ -22,7 +22,13 @@ export default new Router({
         {
             path: '/users',
             name: 'Users',
-            component: () => import(/* webpackChunkName: "about" */ './views/Users.vue')
+            component: () => import(/* webpackChunkName: "about" */ './views/Users.vue'),
+            children: [
+                {
+                    path: ':id',
+                    component: () => import(/* webpackChunkName: "realmdetail" */ './views/Users/UserDetail.vue')
+                }
+            ]
         },
         {
             path: '/logs',

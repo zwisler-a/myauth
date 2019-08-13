@@ -15,42 +15,45 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import SubList from '../components/SubList.vue';
 import { RealmService } from '../../services/realm.service';
+import { Notification } from '../../services/notif.service';
 import KeyValueInput from '../../components/KeyValueInput.vue';
 
 @Component({ components: { KeyValueInput } })
 export default class RealmDetail extends Vue {
+  public realm = null;
+  private realmCopy: any;
   private realmService: RealmService;
-  realm = null;
-  realmCopy: any;
   constructor() {
     super();
     this.realmService = RealmService.getInstance();
   }
 
-  mounted() {
+  public mounted() {
     if (this.$route.params.id) {
       this.loadRealm(this.$route.params.id);
+    }
+  }
+
+  public async saveChanges() {
+    try {
+      const realm = this.realm || {} as any;
+      await this.realmService.updateRealm({
+        id: realm.id,
+        name: realm.name,
+        domains: realm.domains,
+        secret: realm.secret,
+        customStyles: realm.customStyles
+      });
+      Notification.show('Realm updated');
+    } catch (e) {
+      Notification.show('Realm could not be updated!');
     }
   }
 
   private async loadRealm(id: string) {
     this.realm = await this.realmService.getRealm(id);
     this.realmCopy = Object.assign({}, this.realm);
-  }
-
-  async saveChanges() {
-    if (this.realm) {
-      await this.realmService.updateRealm({
-        id: this.realm.id,
-        name: this.realm.name,
-        domains: this.realm.domains,
-        secret: this.realm.secret,
-        customStyles: this.realm.customStyles
-      })
-      this.$router.push(this.$router.currentRoute);
-    }
   }
 
   get isDirty() {

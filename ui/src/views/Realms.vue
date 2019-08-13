@@ -19,8 +19,7 @@ import { RealmService } from '../services/realm.service';
 
 @Component({ components: { SubList } })
 export default class Realms extends Vue {
-  realms: any[] = [];
-
+  public realms: any[] = [];
   private realmService: RealmService;
   constructor() {
     super();
@@ -31,14 +30,16 @@ export default class Realms extends Vue {
     this.loadRealms();
   }
 
-  async loadRealms() {
-    this.realms = await this.realmService.getRealms()
-  }
-
-  async showRealm(realm: any) {
+  public async showRealm(realm: any) {
     try {
       await this.$router.push({ path: `/realms/${realm.id}` });
-    } catch (e) { }
+    } catch (e) {
+      e = e;
+    }
+  }
+
+  private async loadRealms() {
+    this.realms = await this.realmService.getRealms();
   }
 }
 </script>

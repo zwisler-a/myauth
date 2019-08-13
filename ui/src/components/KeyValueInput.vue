@@ -1,7 +1,7 @@
 <template>
   <div>
     <label>{{label}}</label>
-    <input v-bind:readonly="readonly" v-model="val" />
+    <input v-bind:readonly="readonly" v-bind:type="type" v-model="val" />
   </div>
 </template>
 
@@ -10,14 +10,15 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 
 @Component
 export default class KeyValueInput extends Vue {
-  @Prop() label!: string;
-  @Prop() value!: string;
-  @Prop() readonly!: boolean;
+  @Prop() public label!: string;
+  @Prop() public value!: string;
+  @Prop() public readonly!: boolean;
+  @Prop({ default: 'text' }) public type!: string;
 
-  get val() {
+  public get val() {
     return this.value;
   }
-  set val(val: any) {
+  public set val(val: any) {
     this.$emit('input', val);
   }
 }
@@ -27,6 +28,8 @@ export default class KeyValueInput extends Vue {
 <style scoped>
 div {
   display: flex;
+  align-items: center;
+  min-height: 35px;
 }
 label {
   width: 200px;
