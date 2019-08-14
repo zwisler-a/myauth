@@ -1,10 +1,13 @@
 module.exports = {
     devServer: {
-      proxy: {
-        "/api": {
-          target: "http://localhost:3333",
-          secure: false
+        proxy: {
+            "/api": {
+                target: "https://auth.zwisler.dev/",
+                secure: false,
+                pathRewrite: {
+                    '^/api': '/'
+                }
+            }
         }
-      }
     }
   };

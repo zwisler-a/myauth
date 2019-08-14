@@ -12,9 +12,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { AuthService } from '../services/auth.service';
-import UserIcon from './UserIcon.vue';
+import { Component, Vue } from "vue-property-decorator";
+import { AuthService } from "../services/auth.service";
+import UserIcon from "./UserIcon.vue";
 
 @Component({ components: { UserIcon } })
 export default class Navigation extends Vue {
@@ -47,6 +47,7 @@ a:visited {
   align-items: center;
 }
 a {
+  color: white;
   padding: 16px;
   display: block;
   text-decoration: none;

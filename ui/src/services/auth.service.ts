@@ -28,7 +28,7 @@ export class AuthService {
         logout: process.env.VUE_APP_AUTH_HOST + 'api/auth/logout',
         login: () =>
             process.env.VUE_APP_AUTH_HOST +
-            'api/auth/login' +
+            'auth/login' +
             '?redirect=' +
             encodeURIComponent(location.protocol + '//' + location.host + location.pathname) +
             '&realmId=' +

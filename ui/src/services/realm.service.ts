@@ -18,19 +18,19 @@ export class RealmService {
     public getRealms() {
         return fetch(this.api.all, { headers: this.createHeaders() })
             .then(res => res.json())
-            .then(res => res.data);
+            .then(this.unpackResponse());
     }
 
     public getRealm(id: string) {
         return fetch(this.api.get + id, { headers: this.createHeaders() })
             .then(res => res.json())
-            .then(res => res.data);
+            .then(this.unpackResponse());
     }
 
     public deleteRealm(realmId: string) {
         return fetch(this.api.delete + realmId, { method: 'delete', headers: this.createHeaders() })
             .then(res => res.json())
-            .then(res => res.data);
+            .then(this.unpackResponse());
     }
 
     public createRealm(realm: any) {
@@ -40,7 +40,7 @@ export class RealmService {
             headers: this.createHeaders()
         })
             .then(res => res.json())
-            .then(res => res.data);
+            .then(this.unpackResponse());
     }
 
     public updateRealm(realm: any) {
@@ -50,7 +50,7 @@ export class RealmService {
             headers: this.createHeaders()
         })
             .then(res => res.json())
-            .then(res => res.data);
+            .then(this.unpackResponse());
     }
 
     private createHeaders(additionalHeader?: { [key: string]: string }) {
@@ -59,5 +59,12 @@ export class RealmService {
             { 'Content-Type': 'application/json', 'x-auth': AuthService.getAuthToken() },
             additionalHeader || {}
         );
+    }
+
+    private unpackResponse() {
+        return (res: any) => {
+            if (res.error) throw new Error(res.errorMessage);
+            return res.data;
+        };
     }
 }

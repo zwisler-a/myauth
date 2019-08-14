@@ -1,69 +1,62 @@
 <template>
-  <section>
-    <transition name="fade">
-      <loader v-if="!realm"></loader>
-      <div v-else class="card">
-        <h1>Realm Details</h1>
-        <key-value-input label="Name" v-model="realm.name"></key-value-input>
-        <key-value-input label="Id" readonly v-model="realm.id"></key-value-input>
-        <key-value-input label="Domains" v-model="realm.domains"></key-value-input>
-        <key-value-input label="Secret" v-model="realm.secret"></key-value-input>
-        <key-value-input label="Custom Styles" v-model="realm.customStyles"></key-value-input>
-
-        <button v-if="isDirty" @click="saveChanges">Save</button>
-      </div>
-    </transition>
-  </section>
+  <form>
+    <key-value-input label="Name" v-model="name"></key-value-input>
+    <key-value-input v-if="showId" label="Id" readonly v-model="id"></key-value-input>
+    <key-value-input label="Domains" v-model="domains"></key-value-input>
+    <key-value-input label="Secret" v-model="secret"></key-value-input>
+    <key-value-input label="Custom Styles" v-model="customStyles"></key-value-input>
+  </form>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { RealmService } from '../../services/realm.service';
-import { Notification } from '../../services/notif.service';
-import KeyValueInput from '../../components/KeyValueInput.vue';
-import Loader from '../../components/Loader.vue';
+import { Component, Vue, Prop } from "vue-property-decorator";
+import { RealmService } from "../../services/realm.service";
+import { Notification } from "../../services/notif.service";
+import KeyValueInput from "../../components/KeyValueInput.vue";
+import { Realm } from "../../model/realm.interface";
 
-@Component({ components: { KeyValueInput, Loader } })
+@Component({ components: { KeyValueInput } })
 export default class RealmDetail extends Vue {
-  public realm = null;
-  private realmCopy: any;
-  private realmService: RealmService;
+  @Prop({ default: {} }) value!: Realm;
+  @Prop({ default: false }) showId!: boolean;
   constructor() {
     super();
-    this.realmService = RealmService.getInstance();
+  }
+  get name() {
+    return this.value.name;
+  }
+  get id() {
+    return this.value.id;
+  }
+  get domains() {
+    return this.value.domains;
+  }
+  get secret() {
+    return this.value.secret;
+  }
+  get customStyles() {
+    return this.value.customStyles;
   }
 
-  public mounted() {
-    if (this.$route.params.id) {
-      this.loadRealm(this.$route.params.id);
-    }
+  set name(val: string) {
+    this.value.name = val;
+    this.$emit("input", this.value);
   }
-
-  public async saveChanges() {
-    try {
-      const realm = this.realm || {} as any;
-      await this.realmService.updateRealm({
-        id: realm.id,
-        name: realm.name,
-        domains: realm.domains,
-        secret: realm.secret,
-        customStyles: realm.customStyles
-      });
-      Notification.show('Realm updated');
-    } catch (e) {
-      Notification.show('Realm could not be updated!');
-    }
+  set id(val: string) {
+    this.value.id = val;
+    this.$emit("input", this.value);
   }
-
-  private async loadRealm(id: string) {
-    this.realm = await this.realmService.getRealm(id);
-    this.realmCopy = Object.assign({}, this.realm);
+  set domains(val: string) {
+    this.value.domains = val;
+    this.$emit("input", this.value);
   }
-
-  get isDirty() {
-    return JSON.stringify(this.realm) !== JSON.stringify(this.realmCopy);
+  set secret(val: string) {
+    this.value.secret = val;
+    this.$emit("input", this.value);
   }
-
-
+  set customStyles(val: string) {
+    this.value.customStyles = val;
+    this.$emit("input", this.value);
+  }
 }
 </script>

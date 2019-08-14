@@ -15,11 +15,11 @@ export default new Router({
             children: [
                 {
                     path: 'create',
-                    component: () => import(/* webpackChunkName: "realmcreate" */ './views/Realms/RealmCreate.vue')
+                    component: () => import(/* webpackChunkName: "realmcreate" */ './views/Realms/RealmCreateContainer.vue')
                 },
                 {
                     path: ':id',
-                    component: () => import(/* webpackChunkName: "realmdetail" */ './views/Realms/RealmDetail.vue')
+                    component: () => import(/* webpackChunkName: "realmdetail" */ './views/Realms/RealmEditContainer.vue')
                 }
             ]
         },
