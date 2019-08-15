@@ -48,9 +48,16 @@ export class UserService {
     }
 
     async create(username: string, password: string, admin?: boolean) {
+        if (await this.userExists(username)) {
+            throw new Error('Username already exists');
+        }
         password = await bcrypt.hash(password, 8);
         const newUser = new User(username, password);
         newUser.admin = admin || false;
         return this.userRepo.save(newUser);
+    }
+
+    async hasUsers() {
+        return (await this.userRepo.count()) > 0;
     }
 }

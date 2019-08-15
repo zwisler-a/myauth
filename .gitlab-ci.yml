@@ -3,6 +3,9 @@ build:
   stage: build
   script:
     - npm install --progress=false
+    - cd ui
+    - npm install --progress=false
+    - cd ..
     - npm run build
   artifacts:
     expire_in: 1 week
@@ -20,3 +23,5 @@ deploy:
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
     - rsync -O -rav dist/ $SSH_USER@$DEPLOY_SERVER:$DEPLOY_PATH
     - ssh $SSH_USER@$DEPLOY_SERVER "cd $DEPLOY_PATH && npm i && $START_SCRIPT"
+  only:
+    - master

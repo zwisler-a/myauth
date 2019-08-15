@@ -1,14 +1,17 @@
 import { Route, Endpoint } from '@zwisler/bridge';
 import { JwtService } from '../service/jwt.service';
 import { UserService } from '../service/user.service';
+import { BridgeError } from '@zwisler/bridge/core/util/bridge.error';
 
 @Route({ basePath: '/user', middleware: [JwtService.authenticate()] })
 export class UserRoute {
     constructor(private userService: UserService) {}
 
     @Endpoint()
-    get(id: string) {
-        return this.userService.getUser(id);
+    async get(id: string) {
+        const user = await this.userService.getUser(id);
+        delete user.password;
+        return user;
     }
 
     @Endpoint()

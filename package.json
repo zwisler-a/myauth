@@ -5,7 +5,9 @@
     "main": "index.js",
     "scripts": {
         "start": "nodemon",
-        "build": "rimraf dist && tsc && ncp src/ui dist/ui && ncp package.json dist/package.json && ncp src/ui/env/prod.env.js dist/ui/env/env.js"
+        "build:ui": "cd ui && npm run build && cd .. && ncp ui/dist dist/ui",
+        "copy-login": "ncp src/ui/login.html dist/ui/login.html",
+        "build": "rimraf dist && tsc && ncp package.json dist/package.json && npm run build:ui"
     },
     "dependencies": {
         "@zwisler/bridge": "^1.1.8",
