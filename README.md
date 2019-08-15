@@ -24,6 +24,6 @@ The MyAuth service knows the secret used by the application server.
 
 ## TODO's
 
-[ ] User/Realm Properties
-[ ] User self care (change password, username, ect)
-[ ] Audit logs
+- [ ] User/Realm Properties
+- [ ] User self care (change password, username, ect)
+- [ ] Audit logs
