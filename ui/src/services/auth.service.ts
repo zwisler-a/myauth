@@ -24,11 +24,11 @@ export class AuthService {
 
     private static token: any;
     private static urls = {
-        getToken: '/api/auth/getToken?signInToken=',
+        getToken: process.env.VUE_APP_AUTH_HOST + 'api/auth/getToken?signInToken=',
         logout: process.env.VUE_APP_AUTH_HOST + 'api/auth/logout',
         login: () =>
             process.env.VUE_APP_AUTH_HOST +
-            'auth/login' +
+            'api/auth/login' +
             '?redirect=' +
             encodeURIComponent(location.protocol + '//' + location.host + location.pathname) +
             '&realmId=' +
