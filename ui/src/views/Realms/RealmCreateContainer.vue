@@ -21,21 +21,25 @@ import Loader from "../../components/Loader.vue";
 import { RealmService } from "../../services/realm.service";
 import { Realm } from "../../model/realm.interface";
 import RealmProperties from "./RealmProperties.vue";
+import { EventService } from "../../services/event.service";
+import { AppEvent } from "../../model/event.enum";
 
 @Component({ components: { RealmDetail, RealmProperties, Loader } })
 export default class RealmCreateContainer extends Vue {
-  public realm: Realm = {} as Realm;
+  public realm: Realm = new Realm();
   private realmService = RealmService.getInstance();
 
   public async create() {
     try {
       const realm = this.realm as any;
-      await this.realmService.createRealm({
+      const newRealm = await this.realmService.createRealm({
         name: realm.name,
         domains: realm.domains,
         secret: realm.secret,
         customStyles: realm.customStyles
       });
+      EventService.dispatch(AppEvent.REALM_CHANGED);
+      this.$router.push("/realms/" + newRealm.id);
       Notification.show("Realm created");
     } catch (e) {
       Notification.show("Realm could not be created!", undefined, "failure");

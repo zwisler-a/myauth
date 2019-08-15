@@ -31,6 +31,8 @@ export default class Navigation extends Vue {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 nav {
+  position: sticky;
+  top: 0;
   flex: 0 0 auto;
   display: flex;
   align-items: center;
@@ -46,6 +48,9 @@ a:visited {
   display: flex;
   align-items: center;
 }
+.userinfo span {
+  margin-left: 4px;
+}
 a {
   color: white;
   padding: 16px;
@@ -55,6 +60,6 @@ a {
   box-sizing: border-box;
 }
 .router-link-active {
-  font-weight: bold;
+  font-weight: bolder;
 }
 </style>

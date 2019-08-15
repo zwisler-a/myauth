@@ -68,6 +68,10 @@ button {
     border-radius: 2px;
     box-shadow: 0px 1px 3px -1px rgba(0, 0, 0, 0.5);
 }
+button.warning {
+    color: var(--failure-color);
+    background: white;
+}
 
 .fade-enter-active {
     transition: opacity 0.2s;
@@ -81,7 +85,7 @@ button {
     margin-top: 0;
 }
 .card .sub-header {
-    margin-top: 16px;
+    margin-top: 24px;
 }
 .card {
     padding: 24px;

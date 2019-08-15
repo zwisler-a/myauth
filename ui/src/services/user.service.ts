@@ -22,7 +22,7 @@ export class UserService {
             headers: this.createHeaders()
         })
             .then(res => res.json())
-            .then(res => res.data);
+            .then(this.unpackResponse());
     }
 
     public createUser(name: any, password: any, admin: any) {
@@ -32,25 +32,25 @@ export class UserService {
             headers: this.createHeaders()
         })
             .then(res => res.json())
-            .then(res => res.data);
+            .then(this.unpackResponse());
     }
 
     public deleteUser(userId: string) {
         return fetch(this.api.delete + userId, { method: 'delete', headers: this.createHeaders() })
             .then(res => res.json())
-            .then(res => res.data);
+            .then(this.unpackResponse());
     }
 
     public getUsers() {
         return fetch(this.api.all, { headers: this.createHeaders() })
             .then(res => res.json())
-            .then(res => res.data);
+            .then(this.unpackResponse());
     }
 
     public getUser(id: string | number) {
         return fetch(this.api.get + id, { headers: this.createHeaders() })
             .then(res => res.json())
-            .then(res => res.data);
+            .then(this.unpackResponse());
     }
 
     private createHeaders(additionalHeader?: { [key: string]: string }) {
@@ -59,5 +59,12 @@ export class UserService {
             { 'Content-Type': 'application/json', 'x-auth': AuthService.getAuthToken() },
             additionalHeader || {}
         );
+    }
+
+    private unpackResponse() {
+        return (res: any) => {
+            if (res.error) throw new Error(res.errorMessage);
+            return res.data;
+        };
     }
 }

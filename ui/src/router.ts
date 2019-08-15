@@ -30,11 +30,11 @@ export default new Router({
             children: [
                 {
                     path: 'create',
-                    component: () => import(/* webpackChunkName: "usercreate" */ './views/Users/UserCreate.vue')
+                    component: () => import(/* webpackChunkName: "usercreate" */ './views/Users/UserCreateContainer.vue')
                 },
                 {
                     path: ':id',
-                    component: () => import(/* webpackChunkName: "realmdetail" */ './views/Users/UserDetail.vue')
+                    component: () => import(/* webpackChunkName: "realmdetail" */ './views/Users/UserEditContainer.vue')
                 }
             ]
         },

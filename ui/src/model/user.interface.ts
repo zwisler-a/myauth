@@ -1,6 +1,6 @@
-export interface User {
-    name: string;
-    id: string;
-    admin: boolean;
-    password: string;
+export class User {
+    public name: string = '';
+    public id: string = '';
+    public admin: boolean = false;
+    public password: string = '';
 }

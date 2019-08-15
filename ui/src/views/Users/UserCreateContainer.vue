@@ -5,9 +5,9 @@
       <div v-else class="card">
         <h1>Create User</h1>
         <user-detail v-model="user" />
-        <h1>User properties</h1>
+        <h1 class="sub-header">User properties</h1>
         <user-properties v-model="user.properties" />
-        <button v-if="isDirty" @click="save">Save</button>
+        <button @click="createUser">Create</button>
       </div>
     </transition>
   </section>
@@ -21,21 +21,23 @@ import Loader from "../../components/Loader.vue";
 import { UserService } from "../../services/user.service";
 import { User } from "../../model/user.interface";
 import UserProperties from "./UserProperties.vue";
+import { EventService } from "../../services/event.service";
+import { AppEvent } from "../../model/event.enum";
 
 @Component({ components: { UserDetail, UserProperties, Loader } })
 export default class UserCreateContainer extends Vue {
-  public user!: object;
+  public user: User = new User();
   private userService = UserService.getInstance();
 
-  public async create() {
+  public async createUser() {
     try {
-      const user = this.user as any;
-      await this.userService.createUser({
-        name: user.name,
-        domains: user.domains,
-        secret: user.secret,
-        customStyles: user.customStyles
-      });
+      const newUser = await this.userService.createUser(
+        this.user.name,
+        this.user.password,
+        this.user.admin
+      );
+      EventService.dispatch(AppEvent.USER_CHANGED);
+      this.$router.push("/users/" + newUser.id);
       Notification.show("User created");
     } catch (e) {
       Notification.show("User could not be created!", undefined, "failure");

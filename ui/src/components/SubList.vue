@@ -78,6 +78,7 @@ li {
   background: white;
   border: solid 1px lightgray;
   border-left: none;
+  border-right: none;
 }
 .header {
   display: flex;

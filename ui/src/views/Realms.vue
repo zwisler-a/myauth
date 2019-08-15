@@ -11,14 +11,18 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import SubList from '../components/SubList.vue';
-import { RealmService } from '../services/realm.service';
+import { Component, Vue } from "vue-property-decorator";
+import SubList from "../components/SubList.vue";
+import { RealmService } from "../services/realm.service";
+import { AppEvent } from "../model/event.enum";
+import { EventService } from "../services/event.service";
+import { Subscription } from "../model/subscription.class";
 
 @Component({ components: { SubList } })
 export default class Realms extends Vue {
   public realms: any[] = [];
   private realmService: RealmService;
+  private realmChangeSub!: Subscription;
   constructor() {
     super();
     this.realmService = RealmService.getInstance();
@@ -26,6 +30,14 @@ export default class Realms extends Vue {
 
   public mounted() {
     this.loadRealms();
+    this.realmChangeSub = EventService.subscribe(
+      AppEvent.REALM_CHANGED,
+      this.loadRealms.bind(this)
+    );
+  }
+
+  beforeDestroy() {
+    if(this.realmChangeSub) this.realmChangeSub.unsubscribe();
   }
 
   public async showRealm(realm: any) {

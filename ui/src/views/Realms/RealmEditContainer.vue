@@ -3,9 +3,14 @@
     <transition name="fade">
       <loader v-if="!realm" />
       <div v-else class="card">
-        <h1>Realm details</h1>
+        <h1>
+          Realm details
+          <span @click="deleteRealm" class="delete-button">
+            <trash-icon />
+          </span>
+        </h1>
         <realm-detail showId v-model="realm" />
-        <h1>Realm properties</h1>
+        <h1 class="sub-header">Realm properties</h1>
         <realm-properties v-model="realm.properties" />
         <button v-if="isDirty" @click="saveChanges">Save</button>
       </div>
@@ -18,13 +23,16 @@ import { Component, Vue } from "vue-property-decorator";
 import { Notification } from "../../services/notif.service";
 import RealmDetail from "./RealmDetail.vue";
 import Loader from "../../components/Loader.vue";
+import TrashIcon from "../../components/TrashIcon.vue";
 import { RealmService } from "../../services/realm.service";
+import { AppEvent } from "../../model/event.enum";
 import { Realm } from "../../model/realm.interface";
 import RealmProperties from "./RealmProperties.vue";
+import { EventService } from "../../services/event.service";
 
-@Component({ components: { RealmDetail, RealmProperties, Loader } })
+@Component({ components: { RealmDetail, RealmProperties, Loader, TrashIcon } })
 export default class RealmEditContainer extends Vue {
-  private realmService = RealmService.getInstance();
+  private realmService: RealmService = RealmService.getInstance();
   public realm: Realm | null = null;
   public fetchedRealm = "";
   public mounted() {
@@ -43,9 +51,22 @@ export default class RealmEditContainer extends Vue {
         secret: realm.secret,
         customStyles: realm.customStyles
       });
+      EventService.dispatch(AppEvent.REALM_CHANGED);
       Notification.show("Realm updated");
     } catch (e) {
       Notification.show("Realm could not be updated!");
+    }
+  }
+
+  public async deleteRealm() {
+    try {
+      const realm = this.realm || ({} as any);
+      await this.realmService.deleteRealm(realm.id);
+      EventService.dispatch(AppEvent.REALM_CHANGED);
+      this.$router.push("/realms");
+      Notification.show("Realm deleted!");
+    } catch (e) {
+      Notification.show("Realm could not be deleted!");
     }
   }
 
@@ -59,3 +80,10 @@ export default class RealmEditContainer extends Vue {
   }
 }
 </script>
+<style scoped>
+.delete-button {
+  cursor: pointer;
+  margin-left: auto;
+  float: right;
+}
+</style>

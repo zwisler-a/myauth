@@ -1,8 +1,8 @@
-export interface Realm {
-    name: string;
-    id: string;
-    domains: string;
-    secret: string;
-    customStyles: string;
-    properties: object[];
+export class Realm {
+    public name: string = '';
+    public id: string = '';
+    public domains: string = '';
+    public secret: string = '';
+    public customStyles: string = '';
+    public properties: object[] = [];
 }

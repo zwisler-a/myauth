@@ -11,9 +11,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import SubList from '../components/SubList.vue';
-import { UserService } from '../services/user.service';
+import { Component, Vue } from "vue-property-decorator";
+import SubList from "../components/SubList.vue";
+import { UserService } from "../services/user.service";
+import { EventService } from "../services/event.service";
+import { AppEvent } from "../model/event.enum";
 
 @Component({ components: { SubList } })
 export default class Users extends Vue {
@@ -26,6 +28,7 @@ export default class Users extends Vue {
 
   public mounted() {
     this.loadUsers();
+    EventService.subscribe(AppEvent.USER_CHANGED, this.loadUsers.bind(this));
   }
 
   public async showUser(realm: any) {
