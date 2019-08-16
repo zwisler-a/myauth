@@ -10,7 +10,7 @@
         "build": "rimraf dist && tsc && ncp package.json dist/package.json && npm run build:ui && npm run copy-login"
     },
     "dependencies": {
-        "@zwisler/bridge": "^1.1.8",
+        "@zwisler/bridge": "^1.1.9",
         "bcryptjs": "^2.4.3",
         "cookie-parser": "^1.4.4",
         "cors": "^2.8.5",

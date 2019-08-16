@@ -21,15 +21,25 @@ const cookieParser = require('cookie-parser');
 const fs = require('fs');
 
 JwtService.secret = fs.readFileSync(config.jwtSecret);
+const indexHtmlFallback = (req, res) => res.sendFile(path.join(__dirname, 'ui/index.html'));
 
 @Server({
     debug: config.debug,
     port: config.port,
     resolve: InitServer,
     basePath: 'api',
+    fallbackResponse: indexHtmlFallback,
     middleware: [cors(), cookieParser(), bodyParser.urlencoded({ extended: false })],
     staticPath: path.join(__dirname, 'ui/'),
-    providers: [OrmService, AuthService, UserService, RealmService, PropertyService, JwtService, { provide: Config, useValue: config }],
+    providers: [
+        OrmService,
+        AuthService,
+        UserService,
+        RealmService,
+        PropertyService,
+        JwtService,
+        { provide: Config, useValue: config }
+    ],
     routes: [AuthRoute, UserRoute, RealmRoute, PropertyRoute]
 })
 export class AuthServer {}
