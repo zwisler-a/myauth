@@ -12,6 +12,7 @@ import { Config } from './config.class';
 import { JwtService } from './service/jwt.service';
 import { PropertyService } from './service/property.service';
 import { PropertyRoute } from './route/property.route';
+import { LogService } from './service/log.service';
 
 const path = require('path');
 const cors = require('cors');
@@ -38,6 +39,7 @@ const indexHtmlFallback = (req, res) => res.sendFile(path.join(__dirname, 'ui/in
         RealmService,
         PropertyService,
         JwtService,
+        LogService,
         { provide: Config, useValue: config }
     ],
     routes: [AuthRoute, UserRoute, RealmRoute, PropertyRoute]

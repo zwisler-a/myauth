@@ -3,10 +3,7 @@ module.exports = {
         proxy: {
             "/api": {
                 target: "https://auth.zwisler.dev/",
-                secure: false,
-                pathRewrite: {
-                    '^/api': '/'
-                }
+                secure: false
             }
         }
     }

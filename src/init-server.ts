@@ -6,6 +6,7 @@ import { Property } from './model/property.model';
 import { Realm } from './model/realm.model';
 import { User } from './model/user.model';
 import { OrmService } from './service/orm.service';
+import { LogEntry } from './model/log.model';
 
 const config = require('./config.json');
 
@@ -13,7 +14,7 @@ const config = require('./config.json');
 export class InitServer implements Resolve {
     constructor(private ormService: OrmService) {}
     async resolve(): Promise<any> {
-        const ormConfig = Object.assign(config.orm, { entities: [User, Realm, PropertyDefinition, Property] });
+        const ormConfig = Object.assign(config.orm, { entities: [User, Realm, PropertyDefinition, Property, LogEntry] });
         const con = await createConnection(ormConfig);
         this.ormService.setConnection(con);
         return null;
