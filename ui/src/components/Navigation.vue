@@ -18,8 +18,12 @@ import UserIcon from "./UserIcon.vue";
 
 @Component({ components: { UserIcon } })
 export default class Navigation extends Vue {
-  get username() {
-    return AuthService.getUserData().name;
+  public username = "";
+
+  public mounted() {
+    AuthService.getUserData()
+      .then(user => user.name)
+      .then(name => (this.username = name));
   }
 
   public logout() {

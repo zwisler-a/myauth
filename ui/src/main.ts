@@ -1,17 +1,13 @@
 import Vue from 'vue';
+declare const myauth: { authenticate: () => Promise<any> };
 import App from './App.vue';
 import router from './router';
-import { AuthService } from './services/auth.service';
 
-Vue.config.productionTip = false;
-
-AuthService.checkLogin()
-    .then(() => {
-        new Vue({
-            router,
-            render: h => h(App)
-        }).$mount('#app');
-    })
-    .catch(err => {
-        return null;
-    });
+Vue.config.productionTip = process.env.NODE_ENV !== 'production';
+(async () => {
+    await myauth.authenticate();
+    new Vue({
+        router,
+        render: h => h(App)
+    }).$mount('#app');
+})();

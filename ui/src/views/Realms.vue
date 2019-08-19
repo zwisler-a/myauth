@@ -36,8 +36,8 @@ export default class Realms extends Vue {
     );
   }
 
-  beforeDestroy() {
-    if(this.realmChangeSub) this.realmChangeSub.unsubscribe();
+  public beforeDestroy() {
+    if (this.realmChangeSub) this.realmChangeSub.unsubscribe();
   }
 
   public async showRealm(realm: any) {

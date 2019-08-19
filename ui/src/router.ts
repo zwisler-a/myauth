@@ -15,26 +15,26 @@ export default new Router({
             children: [
                 {
                     path: 'create',
-                    component: () => import(/* webpackChunkName: "realmcreate" */ './views/Realms/RealmCreateContainer.vue')
+                    component: () => import(/* webpackChunkName: "rc" */ './views/Realms/RealmCreateContainer.vue')
                 },
                 {
                     path: ':id',
-                    component: () => import(/* webpackChunkName: "realmdetail" */ './views/Realms/RealmEditContainer.vue')
+                    component: () => import(/* webpackChunkName: "rd" */ './views/Realms/RealmEditContainer.vue')
                 }
             ]
         },
         {
             path: '/users',
             name: 'Users',
-            component: () => import(/* webpackChunkName: "about" */ './views/Users.vue'),
+            component: () => import(/* webpackChunkName: "u" */ './views/Users.vue'),
             children: [
                 {
                     path: 'create',
-                    component: () => import(/* webpackChunkName: "usercreate" */ './views/Users/UserCreateContainer.vue')
+                    component: () => import(/* webpackChunkName: "uc" */ './views/Users/UserCreateContainer.vue')
                 },
                 {
                     path: ':id',
-                    component: () => import(/* webpackChunkName: "realmdetail" */ './views/Users/UserEditContainer.vue')
+                    component: () => import(/* webpackChunkName: "ud" */ './views/Users/UserEditContainer.vue')
                 }
             ]
         },
@@ -42,6 +42,7 @@ export default new Router({
             path: '/logs',
             name: 'Logs',
             component: () => import(/* webpackChunkName: "logs" */ './views/Logs.vue')
-        }
+        },
+        { path: '*', redirect: 'realm' }
     ]
 });

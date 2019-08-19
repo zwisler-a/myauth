@@ -32,9 +32,9 @@ import { EventService } from "../../services/event.service";
 
 @Component({ components: { RealmDetail, RealmProperties, Loader, TrashIcon } })
 export default class RealmEditContainer extends Vue {
-  private realmService: RealmService = RealmService.getInstance();
   public realm: Realm | null = null;
   public fetchedRealm = "";
+  private realmService: RealmService = RealmService.getInstance();
   public mounted() {
     if (this.$route.params.id) {
       this.loadRealm(this.$route.params.id);

@@ -17,42 +17,41 @@ import { Realm } from "../../model/realm.interface";
 
 @Component({ components: { KeyValueInput } })
 export default class RealmDetail extends Vue {
-  @Prop({ default: {} }) value!: Realm;
-  @Prop({ default: false }) showId!: boolean;
+  @Prop({ default: {} }) public value!: Realm;
+  @Prop({ default: false }) public showId!: boolean;
   constructor() {
     super();
   }
   get name() {
     return this.value.name;
   }
-  get id() {
-    return this.value.id;
-  }
-  get domains() {
-    return this.value.domains;
-  }
-  get secret() {
-    return this.value.secret;
-  }
-  get customStyles() {
-    return this.value.customStyles;
-  }
-
   set name(val: string) {
     this.value.name = val;
     this.$emit("input", this.value);
+  }
+  get id() {
+    return this.value.id;
   }
   set id(val: string) {
     this.value.id = val;
     this.$emit("input", this.value);
   }
+  get domains() {
+    return this.value.domains;
+  }
   set domains(val: string) {
     this.value.domains = val;
     this.$emit("input", this.value);
   }
+  get secret() {
+    return this.value.secret;
+  }
   set secret(val: string) {
     this.value.secret = val;
     this.$emit("input", this.value);
+  }
+  get customStyles() {
+    return this.value.customStyles;
   }
   set customStyles(val: string) {
     this.value.customStyles = val;
