@@ -6,7 +6,7 @@
     "scripts": {
         "start": "nodemon",
         "build:ui": "cd ui && npm run build && cd .. && ncp ui/dist dist/ui",
-        "copy-login": "ncp src/ui/login.html dist/ui/login.html",
+        "copy-login": "ncp src/ui/ dist/ui/",
         "build": "rimraf dist && tsc && ncp package.json dist/package.json && npm run build:ui && npm run copy-login"
     },
     "dependencies": {
