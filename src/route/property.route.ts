@@ -17,7 +17,7 @@ export class PropertyRoute {
     }
 
     @Endpoint({ method: 'DELETE' })
-    deleteDefinitions(definitionId: string) {
+    deleteDefinition(definitionId: string) {
         this.propService.deleteDefinition(definitionId);
     }
 

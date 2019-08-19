@@ -1,14 +1,21 @@
+
 <template>
   <div class="wrapper">
     <div class="trash-solid icon"></div>
   </div>
 </template>
+<script lang="ts">
+import { Component } from "vue-property-decorator";
+import Vue from "vue";
 
+@Component
+export default class Navigation extends Vue {}
+</script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .wrapper {
-  width: 23px;
-  height: 23px;
+  width: 19px;
+  height: 19px;
   display: inline-block;
 }
 .trash-solid.icon {

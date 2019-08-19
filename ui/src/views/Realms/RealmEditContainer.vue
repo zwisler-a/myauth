@@ -11,7 +11,7 @@
         </h1>
         <realm-detail showId v-model="realm" />
         <h1 class="sub-header">Realm properties</h1>
-        <realm-properties v-model="realm.properties" />
+        <realm-properties v-model="properties" />
         <button v-if="isDirty" @click="saveChanges">Save</button>
       </div>
     </transition>
@@ -29,12 +29,15 @@ import { AppEvent } from "../../model/event.enum";
 import { Realm } from "../../model/realm.interface";
 import RealmProperties from "./RealmProperties.vue";
 import { EventService } from "../../services/event.service";
+import { PropService } from "../../services/prop.service";
+import { PropertyDefinition } from "../../model/property-definition.class";
 
 @Component({ components: { RealmDetail, RealmProperties, Loader, TrashIcon } })
 export default class RealmEditContainer extends Vue {
   public realm: Realm | null = null;
   public fetchedRealm = "";
   private realmService: RealmService = RealmService.getInstance();
+  private propService: PropService = PropService.getInstance();
   public mounted() {
     if (this.$route.params.id) {
       this.loadRealm(this.$route.params.id);
@@ -51,6 +54,11 @@ export default class RealmEditContainer extends Vue {
         secret: realm.secret,
         customStyles: realm.customStyles
       });
+      await this.propService.updateDefinitions(
+        this.realm!.id,
+        this.realm!.properties
+      );
+      this.loadRealm(this.realm!.id);
       EventService.dispatch(AppEvent.REALM_CHANGED);
       Notification.show("Realm updated");
     } catch (e) {
@@ -73,6 +81,15 @@ export default class RealmEditContainer extends Vue {
   private async loadRealm(id: string) {
     this.realm = await this.realmService.getRealm(id);
     this.fetchedRealm = JSON.stringify(this.realm);
+  }
+
+  get properties() {
+    return this.realm!.properties;
+  }
+
+  set properties(value) {
+    this.realm!.properties = value;
+    this.fetchedRealm = "dirty";
   }
 
   get isDirty() {
