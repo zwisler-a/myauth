@@ -34,7 +34,7 @@ export default class UserDetail extends Vue {
   }
 
   get password() {
-    return null;
+    return this.value.password;
   }
   set password(val: any) {
     this.value.password = val;

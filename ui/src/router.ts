@@ -43,6 +43,6 @@ export default new Router({
             name: 'Logs',
             component: () => import(/* webpackChunkName: "logs" */ './views/Logs.vue')
         },
-        { path: '*', redirect: 'realm' }
+        { path: '*', redirect: '/realms' }
     ]
 });

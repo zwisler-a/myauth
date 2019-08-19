@@ -75,10 +75,7 @@ li {
   box-shadow: none;
   padding: 10px 14px;
   text-decoration: none;
-  background: white;
-  border: solid 1px lightgray;
-  border-left: none;
-  border-right: none;
+  border-bottom: solid 1px lightgray;
 }
 .header {
   display: flex;

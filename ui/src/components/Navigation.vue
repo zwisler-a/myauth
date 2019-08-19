@@ -4,10 +4,17 @@
     <router-link to="/realms">Realms</router-link>
     <router-link to="/logs">Logs</router-link>
     <span style="flex:1 1 auto;"></span>
-    <div class="userinfo" @click="logout">
-      <user-icon />
-      <span>{{username}}</span>
-    </div>
+    <my-menu>
+      <template v-slot:menu>
+        <div class="userinfo">
+          <user-icon />
+          <span>{{username}}</span>
+        </div>
+      </template>
+      <template v-slot:menu-items>
+        <span @click="logout" class="menu-item">Logout</span>
+      </template>
+    </my-menu>
   </nav>
 </template>
 
@@ -15,8 +22,9 @@
 import { Component, Vue } from "vue-property-decorator";
 import { AuthService } from "../services/auth.service";
 import UserIcon from "./UserIcon.vue";
+import MyMenu from "./Menu.vue";
 
-@Component({ components: { UserIcon } })
+@Component({ components: { UserIcon, MyMenu } })
 export default class Navigation extends Vue {
   public username = "";
 
@@ -62,6 +70,13 @@ a {
   text-decoration: none;
   user-select: none;
   box-sizing: border-box;
+}
+.menu-item {
+  cursor: pointer;
+  padding: 4px 8px;
+}
+.menu-item:hover {
+  background: #eeeeee;
 }
 .router-link-active {
   font-weight: bolder;

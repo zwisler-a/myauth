@@ -10,7 +10,7 @@ export class AuthService {
     }
 
     public static async getUserData(): Promise<any> {
-        if (!(this.getAuthToken().split('.').length >= 1)) return {};
+        if (!((await this.getAuthToken()).split('.').length >= 1)) return {};
         return JSON.parse(atob(this.getAuthToken().split('.')[1]));
     }
 }

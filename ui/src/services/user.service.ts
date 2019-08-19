@@ -1,4 +1,5 @@
 import { AuthService } from './auth.service';
+import { User } from '@/model/user.interface';
 
 export class UserService {
     public static getInstance() {
@@ -47,10 +48,11 @@ export class UserService {
             .then(this.unpackResponse());
     }
 
-    public getUser(id: string | number) {
+    public getUser(id: string | number): Promise<User> {
         return fetch(this.api.get + id, { headers: this.createHeaders() })
             .then(res => res.json())
-            .then(this.unpackResponse());
+            .then(this.unpackResponse())
+            .then(userObj => new User(userObj.id, userObj.name, userObj.password, userObj.admin));
     }
 
     private createHeaders(additionalHeader?: { [key: string]: string }) {

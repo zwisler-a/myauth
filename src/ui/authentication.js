@@ -29,6 +29,7 @@ window.myauth = (function() {
         const queryToken = getParameterByName('token');
         if (queryToken) return fetchToken(queryToken);
         window.location.href = LOGIN_URL();
+        return new Promise(_ => {});
     }
 
     function fetchToken(signInToken) {
@@ -42,7 +43,6 @@ window.myauth = (function() {
     }
 
     function returnToken() {
-        console.log(authToken);
         return authToken;
     }
 

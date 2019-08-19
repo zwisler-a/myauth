@@ -36,8 +36,10 @@ body {
     --font-color: #30373d;
     --success-color: #a0cf27;
     --failure-color: #ee6c4d;
-    --bg-color: #478387;
-    --primary-color: #094d92;
+    --bg-color: #525252;
+    --primary-color: #042f4b;
+
+    color: var(--font-color);
 }
 
 section {
@@ -50,7 +52,9 @@ input:focus {
     border-bottom: solid 1px var(--primary-color);
 }
 input {
-    border: solid 1px lightgray;
+    border: none;
+    color: var(--font-color);
+    border-bottom: solid 1px lightgray;
     padding: 10px;
     min-width: 0;
 }

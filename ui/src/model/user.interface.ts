@@ -1,6 +1,8 @@
 export class User {
-    public name: string = '';
-    public id: string = '';
-    public admin: boolean = false;
-    public password: string = '';
+    constructor(
+        public id: string = '',
+        public name: string = '',
+        public password: string = '',
+        public admin: boolean = false
+    ) {}
 }
