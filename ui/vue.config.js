@@ -2,7 +2,7 @@ module.exports = {
     devServer: {
         proxy: {
             '/api': {
-                target: 'https://auth.zwisler.dev/',
+                target: 'http://localhost:3333/',
                 secure: false
             }
         }

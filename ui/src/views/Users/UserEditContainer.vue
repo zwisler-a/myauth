@@ -65,7 +65,7 @@ export default class UserEditContainer extends Vue {
       this.$router.push("/users");
       Notification.show("User deleted!");
     } catch (e) {
-      Notification.show("User could not be deleted!");
+      Notification.show("User could not be deleted!", undefined, "failure");
     }
   }
 

@@ -62,7 +62,7 @@ export default class RealmEditContainer extends Vue {
       EventService.dispatch(AppEvent.REALM_CHANGED);
       Notification.show("Realm updated");
     } catch (e) {
-      Notification.show("Realm could not be updated!");
+      Notification.show("Realm could not be updated!", undefined, "failure");
     }
   }
 
@@ -74,7 +74,7 @@ export default class RealmEditContainer extends Vue {
       this.$router.push("/realms");
       Notification.show("Realm deleted!");
     } catch (e) {
-      Notification.show("Realm could not be deleted!");
+      Notification.show("Realm could not be deleted!", undefined, "failure");
     }
   }
 

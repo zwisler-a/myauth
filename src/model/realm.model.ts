@@ -19,7 +19,7 @@ export class Realm {
     @Column()
     secret: string;
 
-    @OneToMany(() => PropertyDefinition, property => property.realm, { eager: true })
+    @OneToMany(() => PropertyDefinition, property => property.realm, { eager: true, cascade: true })
     properties: PropertyDefinition[];
 
     constructor(name: string, domains: string, secret: string, customStyle: string) {

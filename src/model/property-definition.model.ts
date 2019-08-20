@@ -10,6 +10,6 @@ export class PropertyDefinition {
     @Column()
     name: string;
 
-    @ManyToOne(() => Realm, realm => realm.properties)
+    @ManyToOne(() => Realm, realm => realm.properties, { onDelete: 'CASCADE' })
     realm: Realm;
 }
