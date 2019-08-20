@@ -2,7 +2,7 @@
   <div class="realm-properties">
     <div v-for="(prop, index) in properties" v-bind:key="index" :class="prop.state">
       <input :value="prop.name" @input="update(prop, $event)" />
-      <div @click="remove(index)">
+      <div class="delete-button" @click="remove(index)">
         <trash-icon></trash-icon>
       </div>
     </div>
@@ -72,6 +72,11 @@ export default class RealmProperties extends Vue {
 }
 .realm-properties > div > input {
   flex: 1 1 auto;
+}
+.delete-button {
+  width: 40px;
+  display: flex;
+  justify-content: center;
 }
 .realm-properties > div {
   display: flex;

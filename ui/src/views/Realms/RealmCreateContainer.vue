@@ -7,7 +7,7 @@
         <realm-detail v-model="realm" />
         <h1 class="sub-header">Realm properties</h1>
         <realm-properties v-model="realm.properties" />
-        <button @click="create">Create</button>
+        <button @click="create" class="action">Create</button>
       </div>
     </transition>
   </section>
@@ -23,11 +23,13 @@ import { Realm } from "../../model/realm.interface";
 import RealmProperties from "./RealmProperties.vue";
 import { EventService } from "../../services/event.service";
 import { AppEvent } from "../../model/event.enum";
+import { PropService } from "../../services/prop.service";
 
 @Component({ components: { RealmDetail, RealmProperties, Loader } })
 export default class RealmCreateContainer extends Vue {
   public realm: Realm = new Realm();
   private realmService = RealmService.getInstance();
+  private propService: PropService = PropService.getInstance();
 
   public async create() {
     try {
@@ -38,6 +40,7 @@ export default class RealmCreateContainer extends Vue {
         secret: realm.secret,
         customStyles: realm.customStyles
       });
+      await this.propService.updateDefinitions(newRealm.id, realm.properties);
       EventService.dispatch(AppEvent.REALM_CHANGED);
       this.$router.push("/realms/" + newRealm.id);
       Notification.show("Realm created");

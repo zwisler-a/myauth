@@ -12,7 +12,7 @@
         <realm-detail showId v-model="realm" />
         <h1 class="sub-header">Realm properties</h1>
         <realm-properties v-model="properties" />
-        <button v-if="isDirty" @click="saveChanges">Save</button>
+        <button class="action" v-if="isDirty" @click="saveChanges">Save</button>
       </div>
     </transition>
   </section>
