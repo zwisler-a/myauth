@@ -16,7 +16,7 @@ import { Realm } from "../../model/realm.interface";
 @Component
 export default class UserProperties extends Vue {
   private realms: Realm[] = [];
-  private _selectedRealm: string = "";
+  private mySelectedRealm: string = "";
   private propService: PropService = PropService.getInstance();
   private realmService: RealmService = RealmService.getInstance();
 
@@ -25,14 +25,14 @@ export default class UserProperties extends Vue {
   }
 
   get selectedRealm() {
-    return this._selectedRealm;
+    return this.mySelectedRealm;
   }
   set selectedRealm(value: string) {
-    this._selectedRealm = value;
+    this.mySelectedRealm = value;
   }
 
   private async loadProperties(realmId: string, userId: string) {
-    await this.propService.get(realmId, userId);
+    // await this.propService.get(realmId, userId);
   }
 }
 </script>
