@@ -1,7 +1,7 @@
 import { Service } from '@zwisler/bridge';
 import { OrmService } from './orm.service';
 import { Property } from '../model/property.model';
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import { PropertyDefinition } from '../model/property-definition.model';
 
 @Service()
@@ -15,6 +15,11 @@ export class PropertyService {
 
     get(userId: string, propertyDefId: number) {
         return this.propRepo.findOne({ userId: userId, definitionId: propertyDefId });
+    }
+
+    bulkGet(userId: string, propertyDefIds: number[]) {
+        if (!propertyDefIds.length) return [];
+        return this.propRepo.find({ userId, definitionId: In(propertyDefIds) });
     }
 
     async updateDefinition(definitionId: string, name: string) {

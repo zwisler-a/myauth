@@ -11,7 +11,7 @@
         </h1>
         <user-detail showId v-model="user" />
         <h1 class="sub-header">User properties</h1>
-        <user-properties v-model="user.properties" />
+        <user-properties :userId="user.id" v-model="user.properties" />
         <button v-if="isDirty" @click="saveChanges">Save</button>
       </div>
     </transition>

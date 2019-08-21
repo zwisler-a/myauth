@@ -1,10 +1,11 @@
 import { Endpoint, Route } from '@zwisler/bridge';
 
 import { PropertyService } from '../service/property.service';
+import { RealmService } from '../service/realm.service';
 
 @Route({ basePath: '/props' })
 export class PropertyRoute {
-    constructor(private propService: PropertyService) {}
+    constructor(private propService: PropertyService, private realmService: RealmService) {}
 
     @Endpoint({ method: 'POST' })
     createDefinition(name: string, realmId: string) {
@@ -27,8 +28,14 @@ export class PropertyRoute {
     }
 
     @Endpoint()
-    get(userId: string, definitionId: string) {
-        throw new Error('Not yet implemented');
+    get(userId: string, definitionId: number) {
+        return this.propService.get(userId, definitionId);
+    }
+
+    @Endpoint()
+    async getForRealm(userId: string, realmId: string) {
+        const realm = await this.realmService.get(realmId);
+        return this.propService.bulkGet(userId, realm.properties.map(prop => prop.id));
     }
 
     @Endpoint({ method: 'POST' })

@@ -67,11 +67,8 @@ export class AuthService {
             realmId: realm ? realm.id : undefined
         };
         if (realm && realm.properties) {
-            const propPromises = realm.properties.map(async propDef => {
-                const props = await this.propService.get(user.id, propDef.id);
-                return { name: propDef.name, defId: propDef.id, value: props.value };
-            });
-            jwtPayload['properties'] = await Promise.all(propPromises);
+            const propIds = realm.properties.map(propDef => propDef.id);
+            jwtPayload['properties'] = await this.propService.bulkGet(user.id, propIds);
         }
         return this.jwtService.createToken(jwtPayload, realm ? realm.secret : undefined);
     }

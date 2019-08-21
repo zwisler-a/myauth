@@ -1,5 +1,6 @@
 import { AuthService } from './auth.service';
 import { PropertyDefinition, PropertyUIState } from '@/model/property-definition.class';
+import { Property } from '@/model/property.class';
 
 export class PropService {
     public static getInstance() {
@@ -9,11 +10,19 @@ export class PropService {
     private static instance: any;
 
     private readonly api = {
-        get: '/api/props/getDefinitions?realmId=',
-        delete: '/api/props/deleteDefinition?definitionId=',
-        update: '/api/props/updateDefinition',
-        create: '/api/props/createDefinition'
+        getDefinition: '/api/props/getDefinitions?realmId=',
+        deleteDefinition: '/api/props/deleteDefinition?definitionId=',
+        updateDefinition: '/api/props/updateDefinition',
+        createDefinition: '/api/props/createDefinition',
+        get: '/api/props/getForRealm?realmId=:realmId&userId=:userId'
     };
+
+    public get(userId: string, realmId: string): Promise<Property[]> {
+        const requestUrl = this.api.get.replace(':realmId', realmId).replace(':userId', userId);
+        return fetch(requestUrl, { headers: this.createHeaders() })
+            .then(res => res.json())
+            .then(this.unpackResponse());
+    }
 
     public updateDefinitions(realmId: string, realmProps: PropertyDefinition[]): any {
         return Promise.all(
@@ -31,19 +40,19 @@ export class PropService {
     }
 
     public getDefinition(realmId: string): Promise<PropertyDefinition[]> {
-        return fetch(this.api.get + realmId, { headers: this.createHeaders() })
+        return fetch(this.api.getDefinition + realmId, { headers: this.createHeaders() })
             .then(res => res.json())
             .then(this.unpackResponse());
     }
 
     public deleteDefinition(definitionId: number) {
-        return fetch(this.api.delete + definitionId, { method: 'delete', headers: this.createHeaders() })
+        return fetch(this.api.deleteDefinition + definitionId, { method: 'delete', headers: this.createHeaders() })
             .then(res => res.json())
             .then(this.unpackResponse());
     }
 
     public createDefinition(realmId: string, name: string) {
-        return fetch(this.api.create, {
+        return fetch(this.api.createDefinition, {
             method: 'post',
             body: JSON.stringify({ realmId, name }),
             headers: this.createHeaders()
@@ -53,7 +62,7 @@ export class PropService {
     }
 
     public updateDefinition(definitionId: number, name: string) {
-        return fetch(this.api.update, {
+        return fetch(this.api.updateDefinition, {
             method: 'post',
             body: JSON.stringify({ definitionId, name }),
             headers: this.createHeaders()
